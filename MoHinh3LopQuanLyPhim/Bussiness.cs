@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MoHinh3LopQuanLyPhim.Model;
 
 namespace MoHinh3LopQuanLyPhim
 {
@@ -104,6 +103,22 @@ namespace MoHinh3LopQuanLyPhim
 
                     DAO.Instance.LuuPhim3D(giaVe3D);
                 }
+            }
+        }
+
+        public class QuanLyPhim
+        {
+            private readonly DAO.PhimDataAccess phimDataAccess;
+
+            public QuanLyPhim()
+            {
+                phimDataAccess = new DAO.PhimDataAccess("Data Source=DESKTOP-KTEQEC6\\SQLEXPRESS;Initial Catalog=QuanLyDoanhThuPhim;Integrated Security=True");
+            }
+
+            public Phims LayThongTinPhimTheoMaDon(string maDon)
+            {
+                // Gọi Data Access Layer để lấy thông tin chi tiết của phim từ cơ sở dữ liệu
+                return phimDataAccess.LayThongTinPhimTheoMaDon(maDon);
             }
         }
 

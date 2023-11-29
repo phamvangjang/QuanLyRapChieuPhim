@@ -38,5 +38,26 @@ namespace MoHinh3LopQuanLyPhim
             Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.phuThuDacBiet };
             return DataProvider.Instance.execNonSql(sql, prms) > 0;
         }
+
+        public class PhimDataAccess
+        {
+            private readonly DatabaseConnection databaseConnection;
+
+            public PhimDataAccess(string connectionString)
+            {
+                databaseConnection = new DatabaseConnection(connectionString);
+            }
+
+            public Phims LayThongTinPhimTheoMaDon(string maDon)
+            {
+                // Viết câu truy vấn SQL để lấy thông tin chi tiết của phim từ cơ sở dữ liệu
+                string query = $"SELECT * FROM Phim WHERE MaDon = '{maDon}'";
+
+                // Thực hiện truy vấn và trả về đối tượng Phim
+                // Lưu ý: Cần kiểm tra và xử lý kết quả truy vấn, xử lý exception, ...
+                return databaseConnection.ExecuteQuery<Phims>(query);
+            }
+        }
+
     }
 }

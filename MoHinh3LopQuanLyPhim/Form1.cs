@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MoHinh3LopQuanLyPhim.Model;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static MoHinh3LopQuanLyPhim.Bussiness;
 
 
 namespace MoHinh3LopQuanLyPhim
@@ -133,6 +135,7 @@ namespace MoHinh3LopQuanLyPhim
         {
             if (lvDanhSachphim.SelectedItems.Count>0)
             {
+                /*
                 txtMaDon.Text = lvDanhSachphim.SelectedItems[0].Text;
                 txtTenPhim.Text = lvDanhSachphim.SelectedItems[0].SubItems[1].Text;
                 if (lvDanhSachphim.SelectedItems[0].SubItems[2].Text.Equals("Tình cảm"))
@@ -142,6 +145,15 @@ namespace MoHinh3LopQuanLyPhim
                 {
                     rdbtnHanhDong.Checked = true;
                 }
+                */
+                // Lấy giá trị của cột "Mã Đơn" từ dòng được chọn
+                string maDon = lvDanhSachphim.SelectedItems[0].SubItems[0].Text;
+
+                // Gọi phương thức trong Logic Layer để lấy thông tin chi tiết từ cơ sở dữ liệu
+                Phims phim = QuanLyPhim.Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
+
+                // Hiển thị thông tin lên bảng điều khiển
+                HienThiThongTinLenBangDieuKhien(phim);
             }
         }
     }

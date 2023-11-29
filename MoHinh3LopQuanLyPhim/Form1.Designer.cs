@@ -342,6 +342,7 @@
             this.colTenPhim,
             this.colTheLoai,
             this.colNgayCongChieu});
+            this.lvDanhSachphim.FullRowSelect = true;
             this.lvDanhSachphim.GridLines = true;
             this.lvDanhSachphim.HideSelection = false;
             this.lvDanhSachphim.Location = new System.Drawing.Point(6, 29);
