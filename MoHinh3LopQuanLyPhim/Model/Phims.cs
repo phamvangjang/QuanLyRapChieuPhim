@@ -14,6 +14,8 @@ namespace MoHinh3LopQuanLyPhim.Model
         public string TheLoai { get;set; }
         public DateTime NgayCongChieu { get; set; }
         public int DoTuoi {  get; set; }
+        public float phuthughedoi {  get; set; }
+        public float phuthudacbiet {  get; set; }
         public double DinhDang2D()
         {
             return 110000;

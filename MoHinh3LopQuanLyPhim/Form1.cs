@@ -150,10 +150,39 @@ namespace MoHinh3LopQuanLyPhim
                 string maDon = lvDanhSachphim.SelectedItems[0].SubItems[0].Text;
 
                 // Gọi phương thức trong Logic Layer để lấy thông tin chi tiết từ cơ sở dữ liệu
-                Phims phim = QuanLyPhim.Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
+                Phims phim = Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
+                txtMaDon.Text = phim.MaDon.ToString();
+                txtTenPhim.Text = phim.TenPhim.ToString();
+                txtQuocGia.Text = phim.QuocGia.ToString();
+                if (phim.TheLoai == "Tình cảm")
+                {
+                    rdbtnTinhCam.Checked = true;
+                }
+                else if (phim.TheLoai == "Hành động")
+                {
+                    rdbtnHanhDong.Checked = true;
+                }
+                dtNgayCongchieu.Text=phim.NgayCongChieu.Date.ToString();
+                txtDoTuoi.Text=phim.DoTuoi.ToString();
 
-                // Hiển thị thông tin lên bảng điều khiển
-                HienThiThongTinLenBangDieuKhien(phim);
+                if (phim.phuthughedoi==0)
+                {
+                    lblPhuThuGheDoi.Visible = false;
+                    txtPhuthughedoi.Visible = false;
+                    rdbtn3D.Checked = true;
+                    lblPhuthudacbiet.Visible= true;
+                    txtPhuthudacbiet.Visible = true;
+                    txtPhuthudacbiet.Text=phim.phuthudacbiet.ToString();
+                }
+                else if (phim.phuthudacbiet == 0)
+                {
+                    lblPhuthudacbiet.Visible = false;
+                    txtPhuthudacbiet.Visible = false;
+                    rdbtn2d.Checked = true;
+                    lblPhuThuGheDoi.Visible = true;
+                    txtPhuthughedoi.Visible = true;
+                    txtPhuthughedoi.Text = phim.phuthughedoi.ToString();
+                }
             }
         }
     }

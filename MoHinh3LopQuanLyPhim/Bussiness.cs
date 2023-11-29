@@ -106,20 +106,30 @@ namespace MoHinh3LopQuanLyPhim
             }
         }
 
-        public class QuanLyPhim
+        public Phims LayThongTinPhimTheoMaDon(string maDon)
         {
-            private readonly DAO.PhimDataAccess phimDataAccess;
-
-            public QuanLyPhim()
+            Phims phims = new Phims();
+            DataTable dataTable = DAO.Instance.LayThongTinPhimTheoMaDon(maDon);
+            foreach (DataRow dataRow in dataTable.Rows)
             {
-                phimDataAccess = new DAO.PhimDataAccess("Data Source=DESKTOP-KTEQEC6\\SQLEXPRESS;Initial Catalog=QuanLyDoanhThuPhim;Integrated Security=True");
+                phims.MaDon = dataRow[0].ToString();
+                phims.TenPhim = dataRow[1].ToString();
+                phims.QuocGia = dataRow[2].ToString();
+                phims.TheLoai = dataRow[3].ToString();
+                phims.NgayCongChieu = DateTime.Parse(dataRow[4].ToString());
+                phims.DoTuoi = int.Parse(dataRow[5].ToString());
+                if (dataRow[6].ToString() != "")
+                {
+                    phims.phuthughedoi = float.Parse(dataRow[6].ToString());
+                    phims.phuthudacbiet = 0;
+                }
+                else
+                {
+                    phims.phuthudacbiet = float.Parse(dataRow[7].ToString());
+                    phims.phuthughedoi = 0;
+                }
             }
-
-            public Phims LayThongTinPhimTheoMaDon(string maDon)
-            {
-                // Gọi Data Access Layer để lấy thông tin chi tiết của phim từ cơ sở dữ liệu
-                return phimDataAccess.LayThongTinPhimTheoMaDon(maDon);
-            }
+            return phims;
         }
 
     }
