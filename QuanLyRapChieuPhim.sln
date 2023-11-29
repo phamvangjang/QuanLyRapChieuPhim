@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34202.233
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuanLyRapChieuPhim", "QuanLyRapChieuPhim\QuanLyRapChieuPhim.csproj", "{D9E916FE-AD67-4EC2-B5C3-7731E6E87C8D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MoHinh3LopQuanLyPhim", "MoHinh3LopQuanLyPhim\MoHinh3LopQuanLyPhim.csproj", "{BDCCCC15-211B-430B-AF5B-DCB51700A0E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D9E916FE-AD67-4EC2-B5C3-7731E6E87C8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D9E916FE-AD67-4EC2-B5C3-7731E6E87C8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D9E916FE-AD67-4EC2-B5C3-7731E6E87C8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D9E916FE-AD67-4EC2-B5C3-7731E6E87C8D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDCCCC15-211B-430B-AF5B-DCB51700A0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDCCCC15-211B-430B-AF5B-DCB51700A0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDCCCC15-211B-430B-AF5B-DCB51700A0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDCCCC15-211B-430B-AF5B-DCB51700A0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {906AF3E9-9276-4A56-84FD-4CFD89116EB7}
+	EndGlobalSection
+EndGlobal
