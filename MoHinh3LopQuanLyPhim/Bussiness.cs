@@ -132,5 +132,9 @@ namespace MoHinh3LopQuanLyPhim
             return phims;
         }
 
+        public bool XoaThongtinTheoMaDon(string maDon)
+        {
+            return DAO.Instance.XoaThongtinTheoMaDon(maDon);
+        }
     }
 }

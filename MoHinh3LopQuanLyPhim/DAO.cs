@@ -45,9 +45,22 @@ namespace MoHinh3LopQuanLyPhim
             string query = $"SELECT * FROM Phim WHERE MaDon = '{maDon}'";
 
             // Thực hiện truy vấn và trả về đối tượng Phim
-            // Lưu ý: Cần kiểm tra và xử lý kết quả truy vấn, xử lý exception, ...
             return DataProvider.Instance.execSql(query);
         }
 
+        public bool XoaThongtinTheoMaDon(string maDon)
+        {
+            try
+            {
+                string query = $"DELETE FROM Phim WHERE MaDon = '{maDon}'";
+                int affectedRows = DataProvider.Instance.execNonSql(query);
+
+                // Kiểm tra số dòng bị ảnh hưởng, nếu lớn hơn 0, xóa thành công
+                return affectedRows > 0;
+            }catch (Exception ex)
+            {
+                return false;
+            }
+        }
     }
 }

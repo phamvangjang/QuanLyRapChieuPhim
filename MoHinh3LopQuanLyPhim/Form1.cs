@@ -1,14 +1,6 @@
 ﻿using MoHinh3LopQuanLyPhim.Model;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using static MoHinh3LopQuanLyPhim.Bussiness;
 
 
 namespace MoHinh3LopQuanLyPhim
@@ -41,7 +33,7 @@ namespace MoHinh3LopQuanLyPhim
 
         private void rdbtnTinhCam_CheckedChanged(object sender, EventArgs e)
         {
-            
+
         }
 
         private void rdbtn3D_CheckedChanged(object sender, EventArgs e)
@@ -120,7 +112,7 @@ namespace MoHinh3LopQuanLyPhim
             {
                 validate = true;
             }
-            if (validate==true)
+            if (validate == true)
             {
                 Bussiness.Instance.Luu(lvDanhSachphim);
             }
@@ -128,24 +120,55 @@ namespace MoHinh3LopQuanLyPhim
 
         private void btnXoa_Click(object sender, EventArgs e)
         {
+            if (lvDanhSachphim.SelectedItems.Count > 0)
+            {
+                //hien thi hop thoai xac nhan
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa phim này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    //lay dong duoc chon
+                    ListViewItem selectedRow = lvDanhSachphim.SelectedItems[0];
+                    // Lấy thông tin của phim từ dòng được chọn
+                    string maDon = lvDanhSachphim.SelectedItems[0].SubItems[0].Text;
+                    // Lấy index của dòng để xóa
+                    int indexToRemove = selectedRow.Index;
 
+                    // Xóa dòng khỏi ListView
+                    lvDanhSachphim.Items.Remove(selectedRow);
+
+                    // Chọn dòng liền kề sau nếu có
+                    if (indexToRemove < lvDanhSachphim.Items.Count)
+                    {
+                        lvDanhSachphim.Items[indexToRemove].Selected = true;
+                        lvDanhSachphim.Select();
+                    }
+                    else if (indexToRemove > 0)
+                    {
+                        // Nếu không có dòng liền kề sau, chọn dòng liền kề trước
+                        lvDanhSachphim.Items[indexToRemove - 1].Selected = true;
+                        lvDanhSachphim.Select();
+                    }
+                    else
+                    {
+                        // Nếu không còn dòng nào trong ListView, xóa thông tin ở bảng điều khiển và đưa trỏ chuột lên txtMaDon
+                        Reset();
+                    }
+                    
+                    // Thực hiện xóa từ cơ sở dữ liệu (thực hiện tương ứng với cơ sở dữ liệu của bạn)
+                    Bussiness.Instance.XoaThongtinTheoMaDon(maDon);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa chọn phim nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         private void lvDanhSachphim_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (lvDanhSachphim.SelectedItems.Count>0)
+            if (lvDanhSachphim.SelectedItems.Count > 0)
             {
-                /*
-                txtMaDon.Text = lvDanhSachphim.SelectedItems[0].Text;
-                txtTenPhim.Text = lvDanhSachphim.SelectedItems[0].SubItems[1].Text;
-                if (lvDanhSachphim.SelectedItems[0].SubItems[2].Text.Equals("Tình cảm"))
-                {
-                    rdbtnTinhCam.Checked = true;
-                }else if (lvDanhSachphim.SelectedItems[0].SubItems[2].Text.Equals("Hành động"))
-                {
-                    rdbtnHanhDong.Checked = true;
-                }
-                */
                 // Lấy giá trị của cột "Mã Đơn" từ dòng được chọn
                 string maDon = lvDanhSachphim.SelectedItems[0].SubItems[0].Text;
 
@@ -162,17 +185,17 @@ namespace MoHinh3LopQuanLyPhim
                 {
                     rdbtnHanhDong.Checked = true;
                 }
-                dtNgayCongchieu.Text=phim.NgayCongChieu.Date.ToString();
-                txtDoTuoi.Text=phim.DoTuoi.ToString();
+                dtNgayCongchieu.Text = phim.NgayCongChieu.Date.ToString();
+                txtDoTuoi.Text = phim.DoTuoi.ToString();
 
-                if (phim.phuthughedoi==0)
+                if (phim.phuthughedoi == 0)
                 {
                     lblPhuThuGheDoi.Visible = false;
                     txtPhuthughedoi.Visible = false;
                     rdbtn3D.Checked = true;
-                    lblPhuthudacbiet.Visible= true;
+                    lblPhuthudacbiet.Visible = true;
                     txtPhuthudacbiet.Visible = true;
-                    txtPhuthudacbiet.Text=phim.phuthudacbiet.ToString();
+                    txtPhuthudacbiet.Text = phim.phuthudacbiet.ToString();
                 }
                 else if (phim.phuthudacbiet == 0)
                 {
