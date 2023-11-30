@@ -156,6 +156,7 @@ namespace MoHinh3LopQuanLyPhim
                     
                     // Thực hiện xóa từ cơ sở dữ liệu (thực hiện tương ứng với cơ sở dữ liệu của bạn)
                     Bussiness.Instance.XoaThongtinTheoMaDon(maDon);
+
                 }
             }
             else
@@ -175,6 +176,7 @@ namespace MoHinh3LopQuanLyPhim
                 // Gọi phương thức trong Logic Layer để lấy thông tin chi tiết từ cơ sở dữ liệu
                 Phims phim = Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
                 txtMaDon.Text = phim.MaDon.ToString();
+                txtMaDon.ReadOnly = true;
                 txtTenPhim.Text = phim.TenPhim.ToString();
                 txtQuocGia.Text = phim.QuocGia.ToString();
                 if (phim.TheLoai == "Tình cảm")
@@ -207,6 +209,12 @@ namespace MoHinh3LopQuanLyPhim
                     txtPhuthughedoi.Text = phim.phuthughedoi.ToString();
                 }
             }
+        }
+
+        private void btnSua_Click(object sender, EventArgs e)
+        {
+            Bussiness.Instance.Sua(lvDanhSachphim);
+            Bussiness.Instance.Xem(lvDanhSachphim);
         }
     }
 }

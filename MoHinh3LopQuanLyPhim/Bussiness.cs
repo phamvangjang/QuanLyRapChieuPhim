@@ -136,5 +136,46 @@ namespace MoHinh3LopQuanLyPhim
         {
             return DAO.Instance.XoaThongtinTheoMaDon(maDon);
         }
+        public void Sua(ListView listView)
+        {
+            Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
+            GiaVe2D giaVe2D = new GiaVe2D();
+            GiaVe3D giaVe3D = new GiaVe3D();
+            string madon = "";
+            if (form1.lvDanhSachphim.SelectedItems.Count>0)
+            {
+                madon = form1.lvDanhSachphim.SelectedItems[0].Text;
+                if (!string.IsNullOrEmpty(madon))
+                {
+                    string theloai = "";
+                    if (form1.rdbtnTinhCam.Checked)
+                    {
+                        theloai = "Tình cảm";
+                    }
+                    else if (form1.rdbtnHanhDong.Checked)
+                    {
+                        theloai = "Hành động";
+                    }
+                    string ngaycongchieu=form1.dtNgayCongchieu.Value.ToShortDateString();
+                    if (form1.rdbtn2d.Checked)
+                    {
+                        giaVe2D.TenPhim = form1.txtTenPhim.Text;
+                        giaVe2D.QuocGia = form1.txtQuocGia.Text;
+                        giaVe2D.NgayCongChieu=DateTime.Parse(ngaycongchieu);
+                        giaVe2D.PhuThuGheDoi=double.Parse(form1.txtPhuthughedoi.Text);
+                        DAO.Instance.SuaPhim2D(giaVe2D, madon);
+                        MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }else if (form1.rdbtn3D.Checked)
+                    {
+                        giaVe3D.TenPhim = form1.txtTenPhim.Text;
+                        giaVe3D.QuocGia = form1.txtQuocGia.Text;
+                        giaVe3D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
+                        giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
+                        DAO.Instance.SuaPhim3D(giaVe3D, madon);
+                        MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
     }
 }
