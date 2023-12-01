@@ -165,7 +165,8 @@ namespace MoHinh3LopQuanLyPhim
                         giaVe2D.PhuThuGheDoi=double.Parse(form1.txtPhuthughedoi.Text);
                         DAO.Instance.SuaPhim2D(giaVe2D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }else if (form1.rdbtn3D.Checked)
+                    }
+                    else if (form1.rdbtn3D.Checked)
                     {
                         giaVe3D.TenPhim = form1.txtTenPhim.Text;
                         giaVe3D.QuocGia = form1.txtQuocGia.Text;

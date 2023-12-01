@@ -69,6 +69,7 @@ namespace MoHinh3LopQuanLyPhim
             rdbtnTinhCam.Checked = true;
             txtPhuthudacbiet.Text = string.Empty;
             txtPhuthughedoi.Text = string.Empty;
+            dtNgayCongchieu.Value = DateTime.Now;
 
             // Gán giá trị mặc định cho các TextBox nhập liệu
             txtMaDon.Focus();
@@ -176,7 +177,6 @@ namespace MoHinh3LopQuanLyPhim
                 // Gọi phương thức trong Logic Layer để lấy thông tin chi tiết từ cơ sở dữ liệu
                 Phims phim = Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
                 txtMaDon.Text = phim.MaDon.ToString();
-                txtMaDon.ReadOnly = true;
                 txtTenPhim.Text = phim.TenPhim.ToString();
                 txtQuocGia.Text = phim.QuocGia.ToString();
                 if (phim.TheLoai == "Tình cảm")

@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace MoHinh3LopQuanLyPhim
 {
@@ -79,10 +80,23 @@ namespace MoHinh3LopQuanLyPhim
                             paramlist.Add(s.TrimEnd(','));
                         }
                     }
+                    if (paramlist.Count == args.Length)
+                    {
+                        for (int i = 0; i < args.Length; i++)
+                        {
+                            command.Parameters.AddWithValue(paramlist[i], args[i]);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("Handle mismatch in the number of parameters and arguments!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                    /*
                     for (int i = 0; i < args.Length; i++)
                     {
                         command.Parameters.AddWithValue(paramlist[i], args[i]);
                     }
+                    */
                 }
                 effectedRows = command.ExecuteNonQuery();
                 connection.Close();

@@ -64,7 +64,7 @@ namespace MoHinh3LopQuanLyPhim
         {
             string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia=@QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh=@DoTuoiQuyDinh, PhuThuGheDoi = @PhuThuGheDoi" +
                 " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { giaVe2D.TenPhim, giaVe2D.QuocGia, giaVe2D.TheLoai, giaVe2D.NgayCongChieu, giaVe2D.PhuThuGheDoi, madon };
+            object[] prms = new object[] { giaVe2D.TenPhim, giaVe2D.QuocGia, giaVe2D.TheLoai, giaVe2D.NgayCongChieu, giaVe2D.DoTuoi, giaVe2D.PhuThuGheDoi, madon };
             return DataProvider.Instance.execNonSql(query, prms)>0;
         }
 
@@ -72,7 +72,7 @@ namespace MoHinh3LopQuanLyPhim
         {
             string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia=@QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh=@DoTuoiQuyDinh, PhuThuSuatChieuDacBiet = @PhuThuSuatChieuDacBiet" +
                 " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { giaVe3D.TenPhim, giaVe3D.QuocGia, giaVe3D.TheLoai, giaVe3D.NgayCongChieu, giaVe3D.phuThuDacBiet, madon };
+            object[] prms = new object[] { giaVe3D.TenPhim, giaVe3D.QuocGia, giaVe3D.TheLoai, giaVe3D.NgayCongChieu, giaVe3D.DoTuoi, giaVe3D.phuThuDacBiet, madon };
             return DataProvider.Instance.execNonSql(query, prms) > 0;
         }
     }
