@@ -74,7 +74,9 @@ namespace MoHinh3LopQuanLyPhim
                     giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
 
                     DAO.Instance.LuuPhim2D(giaVe2D);
-                }else if (form1.rdbtn3D.Checked)
+                    MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else if (form1.rdbtn3D.Checked)
                 {
                     string theLoai = "";
                     if (form1.rdbtnTinhCam.Checked)
@@ -102,6 +104,7 @@ namespace MoHinh3LopQuanLyPhim
                     giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
 
                     DAO.Instance.LuuPhim3D(giaVe3D);
+                    MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
         }
@@ -109,6 +112,8 @@ namespace MoHinh3LopQuanLyPhim
         public Phims LayThongTinPhimTheoMaDon(string maDon)
         {
             Phims phims = new Phims();
+            GiaVe2D giaVe2D = new GiaVe2D();
+            GiaVe3D giaVe3D = new GiaVe3D();
             DataTable dataTable = DAO.Instance.LayThongTinPhimTheoMaDon(maDon);
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -120,13 +125,13 @@ namespace MoHinh3LopQuanLyPhim
                 phims.DoTuoi = int.Parse(dataRow[5].ToString());
                 if (dataRow[6].ToString() != "")
                 {
-                    phims.phuthughedoi = float.Parse(dataRow[6].ToString());
-                    phims.phuthudacbiet = 0;
+                    giaVe2D.PhuThuGheDoi = float.Parse(dataRow[6].ToString());
+                    giaVe3D.phuThuDacBiet= 0;
                 }
                 else
                 {
-                    phims.phuthudacbiet = float.Parse(dataRow[7].ToString());
-                    phims.phuthughedoi = 0;
+                    giaVe3D.phuThuDacBiet = float.Parse(dataRow[7].ToString());
+                    giaVe2D.PhuThuGheDoi = 0;
                 }
             }
             return phims;
@@ -161,7 +166,9 @@ namespace MoHinh3LopQuanLyPhim
                     {
                         giaVe2D.TenPhim = form1.txtTenPhim.Text;
                         giaVe2D.QuocGia = form1.txtQuocGia.Text;
+                        giaVe2D.TheLoai = theloai;
                         giaVe2D.NgayCongChieu=DateTime.Parse(ngaycongchieu);
+                        giaVe2D.DoTuoi=Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe2D.PhuThuGheDoi=double.Parse(form1.txtPhuthughedoi.Text);
                         DAO.Instance.SuaPhim2D(giaVe2D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -170,12 +177,19 @@ namespace MoHinh3LopQuanLyPhim
                     {
                         giaVe3D.TenPhim = form1.txtTenPhim.Text;
                         giaVe3D.QuocGia = form1.txtQuocGia.Text;
+                        giaVe3D.TheLoai=theloai;
                         giaVe3D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
+                        giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
                         DAO.Instance.SuaPhim3D(giaVe3D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
+            }
+            else
+            {
+                MessageBox.Show("Bạn chưa chọn phim nào để sửa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
     }
