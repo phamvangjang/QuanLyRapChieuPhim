@@ -400,6 +400,7 @@
             this.btnThongKe.TabIndex = 5;
             this.btnThongKe.Text = "Thống kê ";
             this.btnThongKe.UseVisualStyleBackColor = false;
+            this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 
             // btnSapXep
             // 

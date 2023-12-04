@@ -222,5 +222,10 @@ namespace MoHinh3LopQuanLyPhim
             lvDanhSachphim.Items.Clear();
             Bussiness.Instance.SapXepPhims(lvDanhSachphim);
         }
+
+        private void btnThongKe_Click(object sender, EventArgs e)
+        {
+            Bussiness.Instance.ThongKe();
+        }
     }
 }

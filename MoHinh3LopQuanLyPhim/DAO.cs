@@ -80,5 +80,15 @@ namespace MoHinh3LopQuanLyPhim
             string query = $"SELECT * FROM Phim ORDER BY NgayCongChieu ASC, DoTuoiQuyDinh DESC";
             return DataProvider.Instance.execSql(query);
         }
+        public DataTable ThongKe()
+        {
+            string query = $"SELECT DinhDang, " +
+                $"COUNT(*) AS TongSoLuong, " +
+                $"SUM(CASE WHEN DinhDang = '2D' THEN PhuThuGheDoi ELSE 0 END) AS TongDoanhThu2D,    " +
+                $"SUM(CASE WHEN DinhDang = '3D' THEN PhuThuSuatChieuDacBiet ELSE 0 END) AS TongDoanhThu3D " +
+                $"FROM Phim " +
+                $"GROUP BY DinhDang;";
+            return DataProvider.Instance.execSql(query);
+        }
     }
 }

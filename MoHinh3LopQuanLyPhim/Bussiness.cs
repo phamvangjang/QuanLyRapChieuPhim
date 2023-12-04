@@ -202,5 +202,21 @@ namespace MoHinh3LopQuanLyPhim
             }
             MessageBox.Show("Đã sắp xếp phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
+        public void ThongKe()
+        {
+            DataTable dataTable = DAO.Instance.ThongKe();
+            DataRow dataRow1 = dataTable.Rows[0];
+            int sl2d = dataRow1.Field<int>("TongSoLuong");
+            double dt2d = dataRow1.Field<double>("TongDoanhThu2D");
+
+            DataRow dataRow2 = dataTable.Rows[1];
+            int sl3d = dataRow2.Field<int>("TongSoLuong");
+            double dt3d = dataRow2.Field<double>("TongDoanhThu3D");
+            MessageBox.Show("Số lượng phim 2D: " + sl2d + "\n" +
+                            "Doanh thu phim 2D: " + (dt2d + sl2d * 110000) + "\n" +
+                            "Số lượng phim 3D: " + sl3d + "\n" +
+                            "Doanh thu phim 3D: " + (dt3d + sl3d * 210000),
+                            "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 }
