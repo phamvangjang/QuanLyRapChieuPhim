@@ -1,17 +1,14 @@
 ﻿using MoHinh3LopQuanLyPhim.Model;
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MoHinh3LopQuanLyPhim
 {
     class Bussiness
     {
-        
+
         private static Bussiness instance;
         internal static Bussiness Instance
         {
@@ -52,8 +49,9 @@ namespace MoHinh3LopQuanLyPhim
                     string theLoai = "";
                     if (form1.rdbtnTinhCam.Checked)
                     {
-                        theLoai = "Tình cảm";       
-                    }else if (form1.rdbtnHanhDong.Checked)
+                        theLoai = "Tình cảm";
+                    }
+                    else if (form1.rdbtnHanhDong.Checked)
                     {
                         theLoai = "Hành động";
                     }
@@ -112,8 +110,6 @@ namespace MoHinh3LopQuanLyPhim
         public Phims LayThongTinPhimTheoMaDon(string maDon)
         {
             Phims phims = new Phims();
-            GiaVe2D giaVe2D = new GiaVe2D();
-            GiaVe3D giaVe3D = new GiaVe3D();
             DataTable dataTable = DAO.Instance.LayThongTinPhimTheoMaDon(maDon);
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -125,13 +121,13 @@ namespace MoHinh3LopQuanLyPhim
                 phims.DoTuoi = int.Parse(dataRow[5].ToString());
                 if (dataRow[6].ToString() != "")
                 {
-                    giaVe2D.PhuThuGheDoi = float.Parse(dataRow[6].ToString());
-                    giaVe3D.phuThuDacBiet= 0;
+                    phims.phuthughedoi = float.Parse(dataRow[6].ToString());
+                    phims.phuthudacbiet = 0;
                 }
                 else
                 {
-                    giaVe3D.phuThuDacBiet = float.Parse(dataRow[7].ToString());
-                    giaVe2D.PhuThuGheDoi = 0;
+                    phims.phuthudacbiet = float.Parse(dataRow[7].ToString());
+                    phims.phuthughedoi = 0;
                 }
             }
             return phims;
@@ -143,13 +139,12 @@ namespace MoHinh3LopQuanLyPhim
         }
         public void Sua(ListView listView)
         {
-            Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
             GiaVe2D giaVe2D = new GiaVe2D();
             GiaVe3D giaVe3D = new GiaVe3D();
-            string madon = "";
-            if (form1.lvDanhSachphim.SelectedItems.Count>0)
+            Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
+            if (form1.lvDanhSachphim.SelectedItems.Count > 0)
             {
-                madon = form1.lvDanhSachphim.SelectedItems[0].Text;
+                string madon = form1.lvDanhSachphim.SelectedItems[0].Text;
                 if (!string.IsNullOrEmpty(madon))
                 {
                     string theloai = "";
@@ -161,15 +156,16 @@ namespace MoHinh3LopQuanLyPhim
                     {
                         theloai = "Hành động";
                     }
-                    string ngaycongchieu=form1.dtNgayCongchieu.Value.ToShortDateString();
+                    string ngaycongchieu = form1.dtNgayCongchieu.Value.ToShortDateString();
                     if (form1.rdbtn2d.Checked)
                     {
                         giaVe2D.TenPhim = form1.txtTenPhim.Text;
                         giaVe2D.QuocGia = form1.txtQuocGia.Text;
                         giaVe2D.TheLoai = theloai;
-                        giaVe2D.NgayCongChieu=DateTime.Parse(ngaycongchieu);
-                        giaVe2D.DoTuoi=Int32.Parse(form1.txtDoTuoi.Text);
-                        giaVe2D.PhuThuGheDoi=double.Parse(form1.txtPhuthughedoi.Text);
+                        giaVe2D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
+                        giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
+                        giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
+                        giaVe3D.phuThuDacBiet = 0;
                         DAO.Instance.SuaPhim2D(giaVe2D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -177,10 +173,11 @@ namespace MoHinh3LopQuanLyPhim
                     {
                         giaVe3D.TenPhim = form1.txtTenPhim.Text;
                         giaVe3D.QuocGia = form1.txtQuocGia.Text;
-                        giaVe3D.TheLoai=theloai;
+                        giaVe3D.TheLoai = theloai;
                         giaVe3D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
                         giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
+                        giaVe2D.PhuThuGheDoi = 0;
                         DAO.Instance.SuaPhim3D(giaVe3D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -191,6 +188,19 @@ namespace MoHinh3LopQuanLyPhim
                 MessageBox.Show("Bạn chưa chọn phim nào để sửa!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+        }
+
+        public void SapXepPhims(ListView listView)
+        {
+            foreach (DataRow rows in DAO.Instance.SapXepPhims().Rows)
+            {
+                ListViewItem item = new ListViewItem(rows["MaDon"].ToString());
+                item.SubItems.Add(rows["TenPhim"].ToString());
+                item.SubItems.Add(rows["TheLoai"].ToString());
+                item.SubItems.Add(rows["NgayCongChieu"].ToString());
+                listView.Items.Add(item);
+            }
+            MessageBox.Show("Đã sắp xếp phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

@@ -75,5 +75,10 @@ namespace MoHinh3LopQuanLyPhim
             object[] prms = new object[] { giaVe3D.TenPhim, giaVe3D.QuocGia, giaVe3D.TheLoai, giaVe3D.NgayCongChieu, giaVe3D.DoTuoi, giaVe3D.phuThuDacBiet, madon };
             return DataProvider.Instance.execNonSql(query, prms) > 0;
         }
+        public DataTable SapXepPhims()
+        {
+            string query = $"SELECT * FROM Phim ORDER BY NgayCongChieu ASC, DoTuoiQuyDinh DESC";
+            return DataProvider.Instance.execSql(query);
+        }
     }
 }

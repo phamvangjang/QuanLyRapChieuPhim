@@ -81,7 +81,6 @@ namespace MoHinh3LopQuanLyPhim
         public bool validate = false;
         private void btnLuu_Click(object sender, EventArgs e)
         {
-
             // Kiểm tra thông tin có hợp lệ
             if (string.IsNullOrEmpty(txtMaDon.Text))
             {
@@ -176,8 +175,6 @@ namespace MoHinh3LopQuanLyPhim
 
                 // Gọi phương thức trong Logic Layer để lấy thông tin chi tiết từ cơ sở dữ liệu
                 Phims phim = Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
-                GiaVe2D giaVe2D = new GiaVe2D();
-                GiaVe3D giaVe3D = new GiaVe3D();
                 txtMaDon.Text = phim.MaDon.ToString();
                 txtTenPhim.Text = phim.TenPhim.ToString();
                 txtQuocGia.Text = phim.QuocGia.ToString();
@@ -192,23 +189,23 @@ namespace MoHinh3LopQuanLyPhim
                 dtNgayCongchieu.Text = phim.NgayCongChieu.Date.ToString();
                 txtDoTuoi.Text = phim.DoTuoi.ToString();
 
-                if (giaVe2D.PhuThuGheDoi== 0)
+                if (phim.phuthughedoi == 0)
                 {
                     lblPhuThuGheDoi.Visible = false;
                     txtPhuthughedoi.Visible = false;
                     rdbtn3D.Checked = true;
                     lblPhuthudacbiet.Visible = true;
                     txtPhuthudacbiet.Visible = true;
-                    txtPhuthudacbiet.Text = giaVe3D.phuThuDacBiet.ToString();
+                    txtPhuthudacbiet.Text = phim.phuthudacbiet.ToString();
                 }
-                else if (giaVe3D.phuThuDacBiet== 0)
+                else if (phim.phuthudacbiet == 0)
                 {
                     lblPhuthudacbiet.Visible = false;
                     txtPhuthudacbiet.Visible = false;
                     rdbtn2d.Checked = true;
                     lblPhuThuGheDoi.Visible = true;
                     txtPhuthughedoi.Visible = true;
-                    txtPhuthughedoi.Text = giaVe2D.PhuThuGheDoi.ToString();
+                    txtPhuthughedoi.Text = phim.phuthughedoi.ToString();
                 }
             }
         }
@@ -218,6 +215,12 @@ namespace MoHinh3LopQuanLyPhim
             Bussiness.Instance.Sua(lvDanhSachphim);
             lvDanhSachphim.Items.Clear();
             Bussiness.Instance.Xem(lvDanhSachphim);
+        }
+
+        private void btnSapXep_Click(object sender, EventArgs e)
+        {
+            lvDanhSachphim.Items.Clear();
+            Bussiness.Instance.SapXepPhims(lvDanhSachphim);
         }
     }
 }
