@@ -25,14 +25,14 @@ namespace MoHinh3LopQuanLyPhim
         }
         public bool LuuPhim2D(GiaVe2D ph)
         {
-            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCongChieu, DoTuoiQuyDinh, PhuThuGheDoi)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCongChieu, @DoTuoiQuyDinh, @PhuThuGheDoi )";
-            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.PhuThuGheDoi };
+            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCongChieu, DoTuoiQuyDinh, PhuThuGheDoi, DinhDang)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCongChieu, @DoTuoiQuyDinh, @PhuThuGheDoi, @DinhDang )";
+            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.PhuThuGheDoi, ph.DinhDang };
             return DataProvider.Instance.execNonSql(sql, prms) > 0;
         }
         public bool LuuPhim3D(GiaVe3D ph)
         {
-            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCongChieu, DoTuoiQuyDinh, PhuThuSuatChieuDacBiet)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCongChieu, @DoTuoiQuyDinh, @PhuThuSuatChieuDacBiet )";
-            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.phuThuDacBiet };
+            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCongChieu, DoTuoiQuyDinh, PhuThuSuatChieuDacBiet, DinhDang)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCongChieu, @DoTuoiQuyDinh, @PhuThuSuatChieuDacBiet, @DinhDang )";
+            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.phuThuDacBiet, ph.DinhDang};
             return DataProvider.Instance.execNonSql(sql, prms) > 0;
         }
 
@@ -62,17 +62,17 @@ namespace MoHinh3LopQuanLyPhim
         }
         public bool SuaPhim2D(GiaVe2D giaVe2D, string madon)
         {
-            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh = @DoTuoiQuyDinh, PhuThuGheDoi = @PhuThuGheDoi" +
+            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh = @DoTuoiQuyDinh, PhuThuGheDoi = @PhuThuGheDoi, DinhDang = @DinhDang" +
                 " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { giaVe2D.TenPhim, giaVe2D.QuocGia, giaVe2D.TheLoai, giaVe2D.NgayCongChieu, giaVe2D.DoTuoi, giaVe2D.PhuThuGheDoi, madon };
+            object[] prms = new object[] { giaVe2D.TenPhim, giaVe2D.QuocGia, giaVe2D.TheLoai, giaVe2D.NgayCongChieu, giaVe2D.DoTuoi, giaVe2D.PhuThuGheDoi, giaVe2D.DinhDang, madon };
             return DataProvider.Instance.execNonSql(query, prms)>0;
         }
 
         public bool SuaPhim3D(GiaVe3D giaVe3D, string madon)
         {
-            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh = @DoTuoiQuyDinh, PhuThuSuatChieuDacBiet = @PhuThuSuatChieuDacBiet" +
+            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh = @DoTuoiQuyDinh, PhuThuSuatChieuDacBiet = @PhuThuSuatChieuDacBiet, DinhDang = @DinhDang" +
                 " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { giaVe3D.TenPhim, giaVe3D.QuocGia, giaVe3D.TheLoai, giaVe3D.NgayCongChieu, giaVe3D.DoTuoi, giaVe3D.phuThuDacBiet, madon };
+            object[] prms = new object[] { giaVe3D.TenPhim, giaVe3D.QuocGia, giaVe3D.TheLoai, giaVe3D.NgayCongChieu, giaVe3D.DoTuoi, giaVe3D.phuThuDacBiet, giaVe3D.DinhDang, madon };
             return DataProvider.Instance.execNonSql(query, prms) > 0;
         }
         public DataTable SapXepPhims()

@@ -154,7 +154,7 @@ namespace MoHinh3LopQuanLyPhim
                         Reset();
                     }
                     
-                    // Thực hiện xóa từ cơ sở dữ liệu (thực hiện tương ứng với cơ sở dữ liệu của bạn)
+                    // Thực hiện xóa từ cơ sở dữ liệu
                     Bussiness.Instance.XoaThongtinTheoMaDon(maDon);
 
                 }

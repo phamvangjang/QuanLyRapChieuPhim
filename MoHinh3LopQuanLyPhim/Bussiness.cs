@@ -32,8 +32,6 @@ namespace MoHinh3LopQuanLyPhim
                 item.SubItems.Add(row["TenPhim"].ToString());
                 item.SubItems.Add(row["TheLoai"].ToString());
                 item.SubItems.Add(row["NgayCongChieu"].ToString());
-                item.SubItems.Add(row["PhuThuGheDoi"].ToString());
-                item.SubItems.Add(row["PhuThuSuatChieuDacBiet"].ToString());
                 lv.Items.Add(item);
             }
         }
@@ -69,6 +67,8 @@ namespace MoHinh3LopQuanLyPhim
                     giaVe2D.TheLoai = theLoai;
                     giaVe2D.NgayCongChieu = DateTime.Parse(ngaycc);
                     giaVe2D.DoTuoi = Convert.ToInt32(form1.txtDoTuoi.Text);
+                    string dinhdangphim = "2D";
+                    giaVe2D.DinhDang = dinhdangphim;
                     giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
 
                     DAO.Instance.LuuPhim2D(giaVe2D);
@@ -99,6 +99,8 @@ namespace MoHinh3LopQuanLyPhim
                     giaVe3D.TheLoai = theLoai;
                     giaVe3D.NgayCongChieu = DateTime.Parse(ngaycc);
                     giaVe3D.DoTuoi = Convert.ToInt32(form1.txtDoTuoi.Text);
+                    string dinhdangphim = "3D";
+                    giaVe3D.DinhDang = dinhdangphim;
                     giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
 
                     DAO.Instance.LuuPhim3D(giaVe3D);
@@ -119,12 +121,12 @@ namespace MoHinh3LopQuanLyPhim
                 phims.TheLoai = dataRow[3].ToString();
                 phims.NgayCongChieu = DateTime.Parse(dataRow[4].ToString());
                 phims.DoTuoi = int.Parse(dataRow[5].ToString());
-                if (dataRow[6].ToString() != "")
+                if (dataRow[8].ToString() == "2D")
                 {
                     phims.phuthughedoi = float.Parse(dataRow[6].ToString());
                     phims.phuthudacbiet = 0;
                 }
-                else
+                else if(dataRow[8].ToString() == "3D")
                 {
                     phims.phuthudacbiet = float.Parse(dataRow[7].ToString());
                     phims.phuthughedoi = 0;
@@ -166,6 +168,7 @@ namespace MoHinh3LopQuanLyPhim
                         giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
                         giaVe3D.phuThuDacBiet = 0;
+                        giaVe2D.DinhDang = "2D";
                         DAO.Instance.SuaPhim2D(giaVe2D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
@@ -178,6 +181,7 @@ namespace MoHinh3LopQuanLyPhim
                         giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
                         giaVe2D.PhuThuGheDoi = 0;
+                        giaVe3D.DinhDang = "3D"; 
                         DAO.Instance.SuaPhim3D(giaVe3D, madon);
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
