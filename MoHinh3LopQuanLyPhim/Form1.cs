@@ -156,7 +156,7 @@ namespace MoHinh3LopQuanLyPhim
                     
                     // Thực hiện xóa từ cơ sở dữ liệu
                     Bussiness.Instance.XoaThongtinTheoMaDon(maDon);
-
+                    MessageBox.Show("Đã xóa phim thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 }
             }
             else
@@ -188,20 +188,21 @@ namespace MoHinh3LopQuanLyPhim
                 }
                 dtNgayCongchieu.Text = phim.NgayCongChieu.Date.ToString();
                 txtDoTuoi.Text = phim.DoTuoi.ToString();
-
-                if (phim.phuthughedoi == 0)
+                if (phim.DinhDang == "3D")
                 {
                     lblPhuThuGheDoi.Visible = false;
                     txtPhuthughedoi.Visible = false;
                     rdbtn3D.Checked = true;
+                    rdbtn2d.Checked = false;
                     lblPhuthudacbiet.Visible = true;
                     txtPhuthudacbiet.Visible = true;
                     txtPhuthudacbiet.Text = phim.phuthudacbiet.ToString();
                 }
-                else if (phim.phuthudacbiet == 0)
+                else if (phim.DinhDang == "2D")
                 {
                     lblPhuthudacbiet.Visible = false;
                     txtPhuthudacbiet.Visible = false;
+                    rdbtn3D.Checked = false;
                     rdbtn2d.Checked = true;
                     lblPhuThuGheDoi.Visible = true;
                     txtPhuthughedoi.Visible = true;
@@ -226,6 +227,11 @@ namespace MoHinh3LopQuanLyPhim
         private void btnThongKe_Click(object sender, EventArgs e)
         {
             Bussiness.Instance.ThongKe();
+        }
+
+        private void btnXuatBaoCao_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

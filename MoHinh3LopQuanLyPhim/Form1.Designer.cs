@@ -59,6 +59,8 @@
             this.colTheLoai = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colNgayCongChieu = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grbTacVu = new System.Windows.Forms.GroupBox();
+            this.btnXuatBaoCao = new System.Windows.Forms.Button();
+            this.btnXuatExcel = new System.Windows.Forms.Button();
             this.btnThongKe = new System.Windows.Forms.Button();
             this.btnSapXep = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
@@ -375,6 +377,8 @@
             // 
             // grbTacVu
             // 
+            this.grbTacVu.Controls.Add(this.btnXuatBaoCao);
+            this.grbTacVu.Controls.Add(this.btnXuatExcel);
             this.grbTacVu.Controls.Add(this.btnThongKe);
             this.grbTacVu.Controls.Add(this.btnSapXep);
             this.grbTacVu.Controls.Add(this.btnSua);
@@ -385,10 +389,33 @@
             this.grbTacVu.ForeColor = System.Drawing.Color.Blue;
             this.grbTacVu.Location = new System.Drawing.Point(14, 496);
             this.grbTacVu.Name = "grbTacVu";
-            this.grbTacVu.Size = new System.Drawing.Size(1074, 92);
+            this.grbTacVu.Size = new System.Drawing.Size(1074, 172);
             this.grbTacVu.TabIndex = 3;
             this.grbTacVu.TabStop = false;
             this.grbTacVu.Text = "Tác vụ";
+            // 
+            // btnXuatBaoCao
+            // 
+            this.btnXuatBaoCao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnXuatBaoCao.ForeColor = System.Drawing.Color.Black;
+            this.btnXuatBaoCao.Location = new System.Drawing.Point(561, 106);
+            this.btnXuatBaoCao.Name = "btnXuatBaoCao";
+            this.btnXuatBaoCao.Size = new System.Drawing.Size(140, 58);
+            this.btnXuatBaoCao.TabIndex = 7;
+            this.btnXuatBaoCao.Text = "Xuat BC";
+            this.btnXuatBaoCao.UseVisualStyleBackColor = false;
+            this.btnXuatBaoCao.Click += new System.EventHandler(this.btnXuatBaoCao_Click);
+            // 
+            // btnXuatExcel
+            // 
+            this.btnXuatExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.btnXuatExcel.ForeColor = System.Drawing.Color.Black;
+            this.btnXuatExcel.Location = new System.Drawing.Point(378, 106);
+            this.btnXuatExcel.Name = "btnXuatExcel";
+            this.btnXuatExcel.Size = new System.Drawing.Size(140, 58);
+            this.btnXuatExcel.TabIndex = 6;
+            this.btnXuatExcel.Text = "Xuat Excel";
+            this.btnXuatExcel.UseVisualStyleBackColor = false;
             // 
             // btnThongKe
             // 
@@ -467,7 +494,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(1111, 600);
+            this.ClientSize = new System.Drawing.Size(1111, 682);
             this.Controls.Add(this.grbTacVu);
             this.Controls.Add(this.grbDSP);
             this.Controls.Add(this.grbTTP);
@@ -531,6 +558,8 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Button btnThem;
+        private System.Windows.Forms.Button btnXuatBaoCao;
+        private System.Windows.Forms.Button btnXuatExcel;
     }
 }
 
