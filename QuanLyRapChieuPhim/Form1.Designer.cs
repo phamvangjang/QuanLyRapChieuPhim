@@ -64,6 +64,8 @@
             this.colPhuthuGD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPhuthuĐB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grbTacVu = new System.Windows.Forms.GroupBox();
+            this.btnXuatBC = new System.Windows.Forms.Button();
+            this.btnXuatExcel = new System.Windows.Forms.Button();
             this.btnThongKe = new System.Windows.Forms.Button();
             this.btnSapXep = new System.Windows.Forms.Button();
             this.btnSua = new System.Windows.Forms.Button();
@@ -389,6 +391,8 @@
             // 
             // grbTacVu
             // 
+            this.grbTacVu.Controls.Add(this.btnXuatBC);
+            this.grbTacVu.Controls.Add(this.btnXuatExcel);
             this.grbTacVu.Controls.Add(this.btnThongKe);
             this.grbTacVu.Controls.Add(this.btnSapXep);
             this.grbTacVu.Controls.Add(this.btnSua);
@@ -403,9 +407,29 @@
             this.grbTacVu.TabStop = false;
             this.grbTacVu.Text = "Tác vụ";
             // 
+            // btnXuatBC
+            // 
+            this.btnXuatBC.Location = new System.Drawing.Point(1194, 46);
+            this.btnXuatBC.Name = "btnXuatBC";
+            this.btnXuatBC.Size = new System.Drawing.Size(139, 42);
+            this.btnXuatBC.TabIndex = 7;
+            this.btnXuatBC.Text = "bc";
+            this.btnXuatBC.UseVisualStyleBackColor = true;
+            this.btnXuatBC.Click += new System.EventHandler(this.btnXuatBC_Click);
+            // 
+            // btnXuatExcel
+            // 
+            this.btnXuatExcel.Location = new System.Drawing.Point(1027, 46);
+            this.btnXuatExcel.Name = "btnXuatExcel";
+            this.btnXuatExcel.Size = new System.Drawing.Size(139, 42);
+            this.btnXuatExcel.TabIndex = 6;
+            this.btnXuatExcel.Text = "Ex";
+            this.btnXuatExcel.UseVisualStyleBackColor = true;
+            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
+            // 
             // btnThongKe
             // 
-            this.btnThongKe.Location = new System.Drawing.Point(1179, 46);
+            this.btnThongKe.Location = new System.Drawing.Point(861, 46);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Size = new System.Drawing.Size(139, 42);
             this.btnThongKe.TabIndex = 5;
@@ -415,7 +439,7 @@
             // 
             // btnSapXep
             // 
-            this.btnSapXep.Location = new System.Drawing.Point(969, 46);
+            this.btnSapXep.Location = new System.Drawing.Point(696, 46);
             this.btnSapXep.Name = "btnSapXep";
             this.btnSapXep.Size = new System.Drawing.Size(139, 42);
             this.btnSapXep.TabIndex = 4;
@@ -425,7 +449,7 @@
             // 
             // btnSua
             // 
-            this.btnSua.Location = new System.Drawing.Point(727, 46);
+            this.btnSua.Location = new System.Drawing.Point(523, 46);
             this.btnSua.Name = "btnSua";
             this.btnSua.Size = new System.Drawing.Size(139, 42);
             this.btnSua.TabIndex = 3;
@@ -435,7 +459,7 @@
             // 
             // btnXoa
             // 
-            this.btnXoa.Location = new System.Drawing.Point(500, 46);
+            this.btnXoa.Location = new System.Drawing.Point(351, 46);
             this.btnXoa.Name = "btnXoa";
             this.btnXoa.Size = new System.Drawing.Size(139, 42);
             this.btnXoa.TabIndex = 2;
@@ -445,7 +469,7 @@
             // 
             // btnLuu
             // 
-            this.btnLuu.Location = new System.Drawing.Point(252, 46);
+            this.btnLuu.Location = new System.Drawing.Point(180, 46);
             this.btnLuu.Name = "btnLuu";
             this.btnLuu.Size = new System.Drawing.Size(139, 42);
             this.btnLuu.TabIndex = 1;
@@ -536,6 +560,8 @@
         private System.Windows.Forms.Button btnThem;
         private System.Windows.Forms.ColumnHeader colPhuthuGD;
         private System.Windows.Forms.ColumnHeader colPhuthuĐB;
+        private System.Windows.Forms.Button btnXuatBC;
+        private System.Windows.Forms.Button btnXuatExcel;
     }
 }
 

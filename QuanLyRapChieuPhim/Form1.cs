@@ -3,8 +3,7 @@ using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace QuanLyRapChieuPhim
 {
@@ -434,7 +433,7 @@ namespace QuanLyRapChieuPhim
         //8. nut sua x
         private void btnSua_Click(object sender, EventArgs e)
         {
-            if (lvDSP.SelectedItems.Count>0)
+            if (lvDSP.SelectedItems.Count > 0)
             {
                 txtMaDon.ReadOnly = true;
                 txtTenPhim.Focus();
@@ -472,8 +471,9 @@ namespace QuanLyRapChieuPhim
                 {
                     // Ví dụ:
                     var phimToUpdate = db.Phims.FirstOrDefault(p => p.MaDon == txtMaDon.Text);
-                    if (phimToUpdate != null) { 
-                        phimToUpdate.TenPhim = txtTenPhim.Text; 
+                    if (phimToUpdate != null)
+                    {
+                        phimToUpdate.TenPhim = txtTenPhim.Text;
                         phimToUpdate.QuocGia = txtTenPhim.Text;
                         phimToUpdate.TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động";
                         phimToUpdate.NgayCongChieu = dtNgayCongChieu.Value;
@@ -493,7 +493,8 @@ namespace QuanLyRapChieuPhim
                         }
                         // Thêm đối tượng vào DbContext và lưu thay đổi
                         MessageBox.Show("Dữ liệu đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        db.SaveChanges(); }
+                        db.SaveChanges();
+                    }
                 }
                 catch (DbUpdateException ex)
                 {
@@ -511,7 +512,7 @@ namespace QuanLyRapChieuPhim
                 MessageBox.Show("Bạn chưa chọn phim nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-        HighlightRecentMovies();
+            HighlightRecentMovies();
         }
 
         private void btnSapXep_Click(object sender, EventArgs e)
@@ -555,6 +556,59 @@ namespace QuanLyRapChieuPhim
             string thongBao = $"Thống kê:\n\nTổng số lượng phim 2D: {tongSoLuong2D}\nTổng doanh thu 2D: {tongDoanhThu2D:C}\n\nTổng số lượng phim 3D: {tongSoLuong3D}\nTổng doanh thu 3D: {tongDoanhThu3D:C}";
 
             MessageBox.Show(thongBao, "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnXuatBC_Click(object sender, EventArgs e)
+        {
+            //Chuẩn bị nguồn dữ liệu
+            var data = db.Phims.Select(p => new { maDon = p.MaDon, QuocGia = p.QuocGia, TenPhim = p.TenPhim, TheLoai = p.TheLoai }).ToList();
+            //Gán nguồn dữ liệu cho CrystalReport
+            CrystalReport1 rpt = new CrystalReport1();
+            rpt.SetDataSource(data);
+            //Hiển thị báo cáo 
+            Form2 fRpt = new Form2();
+            fRpt.crystalReportViewer1.ReportSource = rpt;
+            fRpt.ShowDialog();
+        }
+
+        private void btnXuatExcel_Click(object sender, EventArgs e)
+        {
+            Excel.Application excelApp = new Excel.Application();
+            Excel.Workbook excelWB = excelApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+            Excel.Worksheet excelWS = excelApp.Worksheets[1];
+
+            Excel.Range excelRange = excelWS.Cells[1, 1];
+            excelRange.Font.Size = 16;
+            excelRange.Font.Bold = true;
+            excelRange.Font.Color = Color.Blue;
+            excelRange.Value = "DANH MỤC SẢN PHẨM";
+
+            //LẤY SP THEO DANH MỤC
+            var catalogs = db.Phims.Select(c => new { MaDon = c.MaDon, TenPhim = c.TenPhim }).ToList();
+            int row = 2;
+            foreach (var c in catalogs)
+            {
+                excelWS.Range["A" + row].Font.Bold = true;
+                excelWS.Range["A" + row].Value = c.TenPhim;
+                row++;
+                //Lấy sản phẩm theo danh mục 
+                var products = from p in db.Phims where p.MaDon == c.MaDon select p;
+                foreach (var p in products)
+                {
+                    excelWS.Range["A" + row].Value = p.MaDon;
+                    excelWS.Range["B" + row].ColumnWidth = 50;
+                    excelWS.Range["B" + row].Value = p.TenPhim;
+                    excelWS.Range["C" + row].Value = p.QuocGia;
+                    row++;
+                }
+            }
+            excelWS.Name = "DanhMucSanPham";
+            excelWB.Activate();
+            //Lưu file
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                excelWB.SaveAs(saveFileDialog.FileName);
+            excelApp.Quit();
         }
     }
 }
