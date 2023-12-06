@@ -123,17 +123,18 @@ namespace MoHinh3LopQuanLyPhim
                 phims.TheLoai = dataRow[3].ToString();
                 phims.NgayCongChieu = DateTime.Parse(dataRow[4].ToString());
                 phims.DoTuoi = int.Parse(dataRow[5].ToString());
-                phims.DinhDang = dataRow[8].ToString();
-                if (phims.DinhDang == "2D")
+                if (dataRow[6].ToString() != "")
                 {
                     phims.phuthughedoi = float.Parse(dataRow[6].ToString());
+                    phims.phuthudacbiet = 0;
                 }
-                else if (phims.DinhDang == "3D")
+                else
                 {
                     phims.phuthudacbiet = float.Parse(dataRow[7].ToString());
+                    phims.phuthughedoi = 0;
                 }
+                phims.DinhDang = dataRow[8].ToString();
             }
-            MessageBox.Show(phims.DinhDang + "\n" + phims.phuthughedoi + "\n" + phims.phuthudacbiet);
             return phims;
         }
 
@@ -169,11 +170,8 @@ namespace MoHinh3LopQuanLyPhim
                         giaVe2D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
                         giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
-                        //giaVe3D.phuThuDacBiet = 0;
                         giaVe2D.DinhDang = "2D";
                         DAO.Instance.SuaPhim2D(giaVe2D, madon);
-                        /*MessageBox.Show("do tuoi: " + giaVe2D.DoTuoi);
-                        MessageBox.Show("ghe doi: " + giaVe2D.PhuThuGheDoi);*/
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     else if (form1.rdbtn3D.Checked)
@@ -184,11 +182,8 @@ namespace MoHinh3LopQuanLyPhim
                         giaVe3D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
                         giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
                         giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
-                        //giaVe2D.PhuThuGheDoi = 0;
                         giaVe3D.DinhDang = "3D";
                         DAO.Instance.SuaPhim3D(giaVe3D, madon);
-                        /*MessageBox.Show("do tuoi: " + giaVe2D.DoTuoi);
-                        MessageBox.Show("dac biet: " + giaVe3D.phuThuDacBiet);*/
                         MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }

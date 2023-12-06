@@ -173,7 +173,7 @@ namespace MoHinh3LopQuanLyPhim
                 // Lấy giá trị của cột "Mã Đơn" từ dòng được chọn
                 string maDon = lvDanhSachphim.SelectedItems[0].SubItems[0].Text;
 
-                // Gọi phương thức trong Logic Layer để lấy thông tin chi tiết từ cơ sở dữ liệu
+                // Gọi phương thức trong Bussiness để lấy thông tin chi tiết từ cơ sở dữ liệu
                 Phims phim = Bussiness.Instance.LayThongTinPhimTheoMaDon(maDon);
                 txtMaDon.Text = phim.MaDon.ToString();
                 txtTenPhim.Text = phim.TenPhim.ToString();
@@ -188,7 +188,7 @@ namespace MoHinh3LopQuanLyPhim
                 }
                 dtNgayCongchieu.Text = phim.NgayCongChieu.Date.ToString();
                 txtDoTuoi.Text = phim.DoTuoi.ToString();
-                if (phim.DinhDang == "3D")
+                if (phim.phuthughedoi == 0)
                 {
                     lblPhuThuGheDoi.Visible = false;
                     txtPhuthughedoi.Visible = false;
@@ -198,7 +198,7 @@ namespace MoHinh3LopQuanLyPhim
                     txtPhuthudacbiet.Visible = true;
                     txtPhuthudacbiet.Text = phim.phuthudacbiet.ToString();
                 }
-                else if (phim.DinhDang == "2D")
+                else if (phim.phuthudacbiet == 0)
                 {
                     lblPhuthudacbiet.Visible = false;
                     txtPhuthudacbiet.Visible = false;
@@ -232,6 +232,11 @@ namespace MoHinh3LopQuanLyPhim
         private void btnXuatBaoCao_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void grbDSP_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

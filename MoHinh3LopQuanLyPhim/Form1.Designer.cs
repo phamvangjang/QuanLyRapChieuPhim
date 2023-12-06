@@ -336,6 +336,7 @@
             this.grbDSP.TabIndex = 2;
             this.grbDSP.TabStop = false;
             this.grbDSP.Text = "Danh sách phim";
+            this.grbDSP.Enter += new System.EventHandler(this.grbDSP_Enter);
             // 
             // lvDanhSachphim
             // 
