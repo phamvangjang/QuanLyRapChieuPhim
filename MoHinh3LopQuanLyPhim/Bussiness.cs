@@ -1,8 +1,10 @@
 ﻿using MoHinh3LopQuanLyPhim.Model;
 using System;
 using System.Data;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MoHinh3LopQuanLyPhim
 {
@@ -112,8 +114,6 @@ namespace MoHinh3LopQuanLyPhim
         public Phims LayThongTinPhimTheoMaDon(string maDon)
         {
             Phims phims = new Phims();
-            GiaVe2D giaVe2D = new GiaVe2D();
-            GiaVe3D giaVe3D = new GiaVe3D();
             DataTable dataTable = DAO.Instance.LayThongTinPhimTheoMaDon(maDon);
             foreach (DataRow dataRow in dataTable.Rows)
             {
@@ -222,6 +222,54 @@ namespace MoHinh3LopQuanLyPhim
                             "Số lượng phim 3D: " + sl3d + "\n" +
                             "Doanh thu phim 3D: " + (dt3d + sl3d * 210000),
                             "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        public void XuatExcel()
+        {
+            Excel.Application excelApp = new Excel.Application();
+            Excel.Workbook excelWB = excelApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+            Excel.Worksheet excelWS = excelApp.Worksheets[1];
+
+            Excel.Range excelRange = excelWS.Cells[1, 1];
+            excelRange.Font.Size = 16;
+            excelRange.Font.Bold = true;
+            excelRange.Font.Color = Color.Blue;
+            excelRange.Value = "DANH MỤC PHIMS";
+            int row = 2;
+            foreach (DataRow dataRow in DAO.Instance.Xem().Rows)
+            {
+                excelWS.Range["A" + row].Font.Bold = true;
+                excelWS.Range["A" + row].Value = dataRow["TenPhim"].ToString();
+                row++;
+                foreach (DataRow ph in DAO.Instance.Xem().Rows)
+                {
+                    excelWS.Range["A" + row].Value = ph["MaDon"].ToString();
+                    excelWS.Range["B" + row].ColumnWidth = 100;
+                    excelWS.Range["B" + row].Value = ph["TenPhim"].ToString();
+                    excelWS.Range["C" + row].ColumnWidth = 100;
+                    excelWS.Range["C" + row].Value = ph["QuocGia"].ToString();
+                    excelWS.Range["D" + row].ColumnWidth = 100;
+                    excelWS.Range["D" + row].Value = ph["TheLoai"].ToString();
+                    excelWS.Range["E" + row].ColumnWidth = 100;
+                    excelWS.Range["E" + row].Value = ph["NgayCongChieu"].ToString();
+                    excelWS.Range["F" + row].ColumnWidth = 100;
+                    excelWS.Range["F" + row].Value = ph["DoTuoiQuyDinh"].ToString();
+                    excelWS.Range["G" + row].ColumnWidth = 100;
+                    excelWS.Range["G" + row].Value = ph["PhuThuGheDoi"].ToString();
+                    excelWS.Range["H" + row].ColumnWidth = 100;
+                    excelWS.Range["H" + row].Value = ph["PhuThuSuatChieuDacBiet"].ToString();
+                    excelWS.Range["K" + row].ColumnWidth = 100;
+                    excelWS.Range["K" + row].Value = ph["DinhDang"].ToString();
+                    row++;
+                }
+            }
+            excelWS.Name = "DanhMucSanPham";
+            excelWB.Activate();
+            //Lưu file
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                excelWB.SaveAs(saveFileDialog.FileName);
+            excelApp.Quit();
+            MessageBox.Show("Đã xuất file Excel thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

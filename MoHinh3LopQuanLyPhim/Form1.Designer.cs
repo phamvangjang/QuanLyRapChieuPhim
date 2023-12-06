@@ -417,6 +417,7 @@
             this.btnXuatExcel.TabIndex = 6;
             this.btnXuatExcel.Text = "Xuat Excel";
             this.btnXuatExcel.UseVisualStyleBackColor = false;
+            this.btnXuatExcel.Click += new System.EventHandler(this.btnXuatExcel_Click);
             // 
             // btnThongKe
             // 

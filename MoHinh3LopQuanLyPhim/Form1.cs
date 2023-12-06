@@ -1,7 +1,8 @@
 ﻿using MoHinh3LopQuanLyPhim.Model;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
-
+using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MoHinh3LopQuanLyPhim
 {
@@ -237,6 +238,11 @@ namespace MoHinh3LopQuanLyPhim
         private void grbDSP_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnXuatExcel_Click(object sender, EventArgs e)
+        {
+            Bussiness.Instance.XuatExcel();
         }
     }
 }
