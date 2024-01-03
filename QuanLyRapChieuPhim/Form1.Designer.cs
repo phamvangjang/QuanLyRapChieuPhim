@@ -57,12 +57,8 @@
             this.lvDSP = new System.Windows.Forms.ListView();
             this.colMaDon = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colTenPhim = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colQuocgia = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colTheLoai = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colNCC = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colĐotuoiQuydinh = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colPhuthuGD = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.colPhuthuĐB = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.grbTacVu = new System.Windows.Forms.GroupBox();
             this.btnXuatBC = new System.Windows.Forms.Button();
             this.btnXuatExcel = new System.Windows.Forms.Button();
@@ -332,12 +328,8 @@
             this.lvDSP.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.colMaDon,
             this.colTenPhim,
-            this.colQuocgia,
             this.colTheLoai,
-            this.colNCC,
-            this.colĐotuoiQuydinh,
-            this.colPhuthuGD,
-            this.colPhuthuĐB});
+            this.colNCC});
             this.lvDSP.FullRowSelect = true;
             this.lvDSP.GridLines = true;
             this.lvDSP.HideSelection = false;
@@ -352,42 +344,22 @@
             // colMaDon
             // 
             this.colMaDon.Text = "Mã đơn";
-            this.colMaDon.Width = 80;
+            this.colMaDon.Width = 100;
             // 
             // colTenPhim
             // 
             this.colTenPhim.Text = "Tên phim";
-            this.colTenPhim.Width = 100;
-            // 
-            // colQuocgia
-            // 
-            this.colQuocgia.Text = "Quốc gia";
-            this.colQuocgia.Width = 100;
+            this.colTenPhim.Width = 120;
             // 
             // colTheLoai
             // 
             this.colTheLoai.Text = "Thể loại";
-            this.colTheLoai.Width = 100;
+            this.colTheLoai.Width = 120;
             // 
             // colNCC
             // 
             this.colNCC.Text = "Ngày công chiếu";
-            this.colNCC.Width = 140;
-            // 
-            // colĐotuoiQuydinh
-            // 
-            this.colĐotuoiQuydinh.Text = "Độ tuổi quy định ";
-            this.colĐotuoiQuydinh.Width = 120;
-            // 
-            // colPhuthuGD
-            // 
-            this.colPhuthuGD.Text = "Phụ thu ghế đôi";
-            this.colPhuthuGD.Width = 120;
-            // 
-            // colPhuthuĐB
-            // 
-            this.colPhuthuĐB.Text = "Phụ thu đặc biệt";
-            this.colPhuthuĐB.Width = 120;
+            this.colNCC.Width = 200;
             // 
             // grbTacVu
             // 
@@ -547,10 +519,8 @@
         private System.Windows.Forms.ListView lvDSP;
         private System.Windows.Forms.ColumnHeader colMaDon;
         private System.Windows.Forms.ColumnHeader colTenPhim;
-        private System.Windows.Forms.ColumnHeader colQuocgia;
         private System.Windows.Forms.ColumnHeader colTheLoai;
         private System.Windows.Forms.ColumnHeader colNCC;
-        private System.Windows.Forms.ColumnHeader colĐotuoiQuydinh;
         private System.Windows.Forms.GroupBox grbTacVu;
         private System.Windows.Forms.Button btnThongKe;
         private System.Windows.Forms.Button btnSapXep;
@@ -558,8 +528,6 @@
         private System.Windows.Forms.Button btnXoa;
         private System.Windows.Forms.Button btnLuu;
         private System.Windows.Forms.Button btnThem;
-        private System.Windows.Forms.ColumnHeader colPhuthuGD;
-        private System.Windows.Forms.ColumnHeader colPhuthuĐB;
         private System.Windows.Forms.Button btnXuatBC;
         private System.Windows.Forms.Button btnXuatExcel;
     }

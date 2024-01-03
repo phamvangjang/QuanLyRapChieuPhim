@@ -12,18 +12,11 @@ namespace MoHinh3LopQuanLyPhim.Model
         public string TenPhim { get; set;}
         public string QuocGia { get; set;}
         public string TheLoai { get;set; }
-        public DateTime NgayCongChieu { get; set; }
+        public DateTime NgayCC { get; set; }
         public int DoTuoi {  get; set; }
-        public float phuthughedoi {  get; set; }
-        public float phuthudacbiet {  get; set; }
+        public float GheDoi {  get; set; }
+        public float DacBiet {  get; set; }
         public string DinhDang {  get; set; }
-        public double DinhDang2D()
-        {
-            return 110000;
-        }
-        public double DinhDang3D()
-        {
-            return 210000;
-        }
+        public float Doanhthu {  get; set; }
     }
 }

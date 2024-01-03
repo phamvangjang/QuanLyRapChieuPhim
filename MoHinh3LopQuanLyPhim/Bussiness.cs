@@ -33,81 +33,75 @@ namespace MoHinh3LopQuanLyPhim
                 ListViewItem item = new ListViewItem(row["MaDon"].ToString());
                 item.SubItems.Add(row["TenPhim"].ToString());
                 item.SubItems.Add(row["TheLoai"].ToString());
-                item.SubItems.Add(row["NgayCongChieu"].ToString());
+                item.SubItems.Add(row["NgayCC"].ToString());
+                DateTime ngayht = DateTime.Now;
+                TimeSpan timeDifference = DateTime.Parse(row["NgayCC"].ToString())-ngayht;
+                if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >=0) // Nếu phim công chiếu trong vòng 7 ngày
+                {
+                    item.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
+                }
                 lv.Items.Add(item);
+
             }
         }
         public void Luu(ListView lv)
         {
-            GiaVe2D giaVe2D = new GiaVe2D();
-            GiaVe3D giaVe3D = new GiaVe3D();
+            Phims phims = new Phims();
             Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
             if (form1 != null)
             {
+                //save to listview
+                string theLoai = "";
+                if (form1.rdbtnTCam.Checked)
+                {
+                    theLoai = "Tình cảm";
+                }
+                else if (form1.rdbtnHDong.Checked)
+                {
+                    theLoai = "Hành động";
+                }
+                string ngaycc = form1.dtNCC.Value.ToShortDateString();
+                ListViewItem listViewItem = new ListViewItem(form1.txtMaDon.Text);
+                listViewItem.SubItems.Add(form1.txtTen.Text);
+                listViewItem.SubItems.Add(theLoai);
+                listViewItem.SubItems.Add(ngaycc);
+
+                //hight light to listview
+                DateTime ngayht = DateTime.Now;
+                TimeSpan timeDifference = DateTime.Parse(ngaycc) - ngayht;
+                if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
+                {
+                    listViewItem.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
+                }
+                form1.lvDanhSachphim.Items.Add(listViewItem);
+
+                //save info form object
+                float dt = 0;
+                float ptghedoi = 0;
+                float ptdacbiet = 0;
+                phims.MaDon = form1.txtMaDon.Text;
+                phims.TenPhim = form1.txtTen.Text;
+                phims.QuocGia = form1.txtQG.Text;
+                phims.TheLoai = theLoai;
+                phims.NgayCC = DateTime.Parse(ngaycc);
+                phims.DoTuoi = Convert.ToInt32(form1.txtDT.Text);
                 if (form1.rdbtn2d.Checked)
                 {
-                    string theLoai = "";
-                    if (form1.rdbtnTinhCam.Checked)
-                    {
-                        theLoai = "Tình cảm";
-                    }
-                    else if (form1.rdbtnHanhDong.Checked)
-                    {
-                        theLoai = "Hành động";
-                    }
-                    string ngaycc = form1.dtNgayCongchieu.Value.ToShortDateString();
-                    ListViewItem listViewItem = new ListViewItem(form1.txtMaDon.Text);
-                    listViewItem.SubItems.Add(form1.txtTenPhim.Text);
-                    listViewItem.SubItems.Add(theLoai);
-                    listViewItem.SubItems.Add(ngaycc);
-
-                    form1.lvDanhSachphim.Items.Add(listViewItem);
-
-                    giaVe2D.MaDon = form1.txtMaDon.Text;
-                    giaVe2D.TenPhim = form1.txtTenPhim.Text;
-                    giaVe2D.QuocGia = form1.txtQuocGia.Text;
-                    giaVe2D.TheLoai = theLoai;
-                    giaVe2D.NgayCongChieu = DateTime.Parse(ngaycc);
-                    giaVe2D.DoTuoi = Convert.ToInt32(form1.txtDoTuoi.Text);
-                    string dinhdangphim = "2D";
-                    giaVe2D.DinhDang = dinhdangphim;
-                    giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
-
-                    DAO.Instance.LuuPhim2D(giaVe2D);
-                    MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    phims.DinhDang = "2D";
+                    ptghedoi = float.Parse(form1.txtGhedoi.Text);
+                    dt += (110000 + ptghedoi);
                 }
-                else if (form1.rdbtn3D.Checked)
+                else if(form1.rdbtn3D.Checked)
                 {
-                    string theLoai = "";
-                    if (form1.rdbtnTinhCam.Checked)
-                    {
-                        theLoai = "Tình cảm";
-                    }
-                    else if (form1.rdbtnHanhDong.Checked)
-                    {
-                        theLoai = "Hành động";
-                    }
-                    string ngaycc = form1.dtNgayCongchieu.Value.ToShortDateString();
-                    ListViewItem listViewItem = new ListViewItem(form1.txtMaDon.Text);
-                    listViewItem.SubItems.Add(form1.txtTenPhim.Text);
-                    listViewItem.SubItems.Add(theLoai);
-                    listViewItem.SubItems.Add(ngaycc);
-
-                    form1.lvDanhSachphim.Items.Add(listViewItem);
-
-                    giaVe3D.MaDon = form1.txtMaDon.Text;
-                    giaVe3D.TenPhim = form1.txtTenPhim.Text;
-                    giaVe3D.QuocGia = form1.txtQuocGia.Text;
-                    giaVe3D.TheLoai = theLoai;
-                    giaVe3D.NgayCongChieu = DateTime.Parse(ngaycc);
-                    giaVe3D.DoTuoi = Convert.ToInt32(form1.txtDoTuoi.Text);
-                    string dinhdangphim = "3D";
-                    giaVe3D.DinhDang = dinhdangphim;
-                    giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
-
-                    DAO.Instance.LuuPhim3D(giaVe3D);
-                    MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    phims.DinhDang = "3D";
+                    ptdacbiet = float.Parse(form1.txtDacbiet.Text);
+                    dt += (210000 + ptdacbiet);
                 }
+                phims.GheDoi = ptghedoi;
+                phims.DacBiet = ptdacbiet;
+                phims.Doanhthu = dt;
+                DAO.Instance.LuuPhim(phims);
+                MessageBox.Show("Đã thêm phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 
@@ -121,17 +115,17 @@ namespace MoHinh3LopQuanLyPhim
                 phims.TenPhim = dataRow[1].ToString();
                 phims.QuocGia = dataRow[2].ToString();
                 phims.TheLoai = dataRow[3].ToString();
-                phims.NgayCongChieu = DateTime.Parse(dataRow[4].ToString());
+                phims.NgayCC = DateTime.Parse(dataRow[4].ToString());
                 phims.DoTuoi = int.Parse(dataRow[5].ToString());
-                if (dataRow[6].ToString() != "")
+                if (dataRow[8].ToString() == "2D")
                 {
-                    phims.phuthughedoi = float.Parse(dataRow[6].ToString());
-                    phims.phuthudacbiet = 0;
+                    phims.GheDoi = float.Parse(dataRow[6].ToString());
+                    phims.DacBiet = 0;
                 }
                 else
                 {
-                    phims.phuthudacbiet = float.Parse(dataRow[7].ToString());
-                    phims.phuthughedoi = 0;
+                    phims.DacBiet = float.Parse(dataRow[7].ToString());
+                    phims.GheDoi = 0;
                 }
                 phims.DinhDang = dataRow[8].ToString();
             }
@@ -144,8 +138,7 @@ namespace MoHinh3LopQuanLyPhim
         }
         public void Sua(ListView listView)
         {
-            GiaVe2D giaVe2D = new GiaVe2D();
-            GiaVe3D giaVe3D = new GiaVe3D();
+            Phims phims = new Phims();
             Form1 form1 = Application.OpenForms.OfType<Form1>().FirstOrDefault();
             if (form1.lvDanhSachphim.SelectedItems.Count > 0)
             {
@@ -153,39 +146,40 @@ namespace MoHinh3LopQuanLyPhim
                 if (!string.IsNullOrEmpty(madon))
                 {
                     string theloai = "";
-                    if (form1.rdbtnTinhCam.Checked)
+                    if (form1.rdbtnTCam.Checked)
                     {
                         theloai = "Tình cảm";
                     }
-                    else if (form1.rdbtnHanhDong.Checked)
+                    else if (form1.rdbtnHDong.Checked)
                     {
                         theloai = "Hành động";
                     }
-                    string ngaycongchieu = form1.dtNgayCongchieu.Value.ToShortDateString();
+                    float dt = 0;
+                    float ptghedoi = 0;
+                    float ptdacbiet = 0;
+                    string NgayCC = form1.dtNCC.Value.ToShortDateString();
+                    phims.TenPhim = form1.txtTen.Text;
+                    phims.QuocGia = form1.txtQG.Text;
+                    phims.TheLoai = theloai;
+                    phims.NgayCC = DateTime.Parse(NgayCC);
+                    phims.DoTuoi = int.Parse(form1.txtDT.Text);
                     if (form1.rdbtn2d.Checked)
-                    {
-                        giaVe2D.TenPhim = form1.txtTenPhim.Text;
-                        giaVe2D.QuocGia = form1.txtQuocGia.Text;
-                        giaVe2D.TheLoai = theloai;
-                        giaVe2D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
-                        giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
-                        giaVe2D.PhuThuGheDoi = double.Parse(form1.txtPhuthughedoi.Text);
-                        giaVe2D.DinhDang = "2D";
-                        DAO.Instance.SuaPhim2D(giaVe2D, madon);
-                        MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    {                        
+                        phims.DinhDang = "2D";
+                        ptghedoi = float.Parse(form1.txtGhedoi.Text);
+                        dt += (110000 + ptghedoi);
                     }
                     else if (form1.rdbtn3D.Checked)
                     {
-                        giaVe3D.TenPhim = form1.txtTenPhim.Text;
-                        giaVe3D.QuocGia = form1.txtQuocGia.Text;
-                        giaVe3D.TheLoai = theloai;
-                        giaVe3D.NgayCongChieu = DateTime.Parse(ngaycongchieu);
-                        giaVe2D.DoTuoi = Int32.Parse(form1.txtDoTuoi.Text);
-                        giaVe3D.phuThuDacBiet = double.Parse(form1.txtPhuthudacbiet.Text);
-                        giaVe3D.DinhDang = "3D";
-                        DAO.Instance.SuaPhim3D(giaVe3D, madon);
-                        MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        ptdacbiet = float.Parse(form1.txtDacbiet.Text);
+                        phims.DinhDang = "3D";
+                        dt += (210000 + ptdacbiet);
                     }
+                    phims.GheDoi = ptghedoi;
+                    phims.DacBiet=ptdacbiet;
+                    phims.Doanhthu = dt;
+                    DAO.Instance.SuaPhim(phims, madon);
+                    MessageBox.Show("Dữ liệu đã được sửa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
             else
@@ -202,7 +196,14 @@ namespace MoHinh3LopQuanLyPhim
                 ListViewItem item = new ListViewItem(rows["MaDon"].ToString());
                 item.SubItems.Add(rows["TenPhim"].ToString());
                 item.SubItems.Add(rows["TheLoai"].ToString());
-                item.SubItems.Add(rows["NgayCongChieu"].ToString());
+                item.SubItems.Add(rows["NgayCC"].ToString());
+
+                DateTime ngayht = DateTime.Now;
+                TimeSpan timeDifference = DateTime.Parse(rows["NgayCC"].ToString()) - ngayht;
+                if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
+                {
+                    item.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
+                }
                 listView.Items.Add(item);
             }
             MessageBox.Show("Đã sắp xếp phim thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -217,10 +218,10 @@ namespace MoHinh3LopQuanLyPhim
             DataRow dataRow2 = dataTable.Rows[1];
             int sl3d = dataRow2.Field<int>("TongSoLuong");
             double dt3d = dataRow2.Field<double>("TongDoanhThu3D");
-            MessageBox.Show("Số lượng phim 2D: " + sl2d + "\n" +
-                            "Doanh thu phim 2D: " + (dt2d + sl2d * 110000) + "\n" +
-                            "Số lượng phim 3D: " + sl3d + "\n" +
-                            "Doanh thu phim 3D: " + (dt3d + sl3d * 210000),
+            MessageBox.Show("Số lượng phim 2D: " + sl2d + "(Phim)\n" +
+                            "Doanh thu phim 2D: " + dt2d + "(vnd)\n\n" +
+                            "Số lượng phim 3D: " + sl3d + "(phim)\n" +
+                            "Doanh thu phim 3D: " + dt3d,
                             "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void XuatExcel()
@@ -250,11 +251,11 @@ namespace MoHinh3LopQuanLyPhim
                     excelWS.Range["D" + row].ColumnWidth = 100;
                     excelWS.Range["D" + row].Value = ph["TheLoai"].ToString();
                     excelWS.Range["E" + row].ColumnWidth = 100;
-                    excelWS.Range["E" + row].Value = ph["NgayCongChieu"].ToString();
+                    excelWS.Range["E" + row].Value = ph["NgayCC"].ToString();
                     excelWS.Range["F" + row].ColumnWidth = 100;
                     excelWS.Range["F" + row].Value = ph["DoTuoiQuyDinh"].ToString();
                     excelWS.Range["G" + row].ColumnWidth = 100;
-                    excelWS.Range["G" + row].Value = ph["PhuThuGheDoi"].ToString();
+                    excelWS.Range["G" + row].Value = ph["GheDoi"].ToString();
                     excelWS.Range["H" + row].ColumnWidth = 100;
                     excelWS.Range["H" + row].Value = ph["PhuThuSuatChieuDacBiet"].ToString();
                     excelWS.Range["K" + row].ColumnWidth = 100;

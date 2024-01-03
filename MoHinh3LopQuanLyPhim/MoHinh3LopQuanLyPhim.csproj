@@ -63,8 +63,6 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\GiaVe2D.cs" />
-    <Compile Include="Model\GiaVe3D.cs" />
     <Compile Include="Model\Phims.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -142,7 +142,7 @@ namespace QuanLyRapChieuPhim
             var p = new Phim
             {
                 MaDon = txtMaDon.Text,
-                TenPhim = txtTenPhim.Text,
+                TenPhim = txtTen.Text,
                 QuocGia = txtQuocGia.Text,
                 TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động",
                 NgayCongChieu = dtNgayCongChieu.Value
@@ -278,7 +278,7 @@ namespace QuanLyRapChieuPhim
         private void SetEditMode()
         {
             txtMaDon.ReadOnly = false;
-            txtTenPhim.ReadOnly = false;
+            txtTen.ReadOnly = false;
             txtQuocGia.ReadOnly = false;
             rdoTinhCam.Enabled = true;
             rdoHanhDong.Enabled = true;
@@ -300,7 +300,7 @@ namespace QuanLyRapChieuPhim
 
                 // Hiển thị dữ liệu từ dòng được chọn vào các điều khiển
                 txtMaDon.Text = selectedRow.SubItems[0].Text;
-                txtTenPhim.Text = selectedRow.SubItems[1].Text;
+                txtTen.Text = selectedRow.SubItems[1].Text;
                 txtQuocGia.Text = selectedRow.SubItems[2].Text;
 
                 // Cột thứ 3 là thể loại (sử dụng RadioButton)
@@ -436,14 +436,14 @@ namespace QuanLyRapChieuPhim
             if (lvDSP.SelectedItems.Count > 0)
             {
                 txtMaDon.ReadOnly = true;
-                txtTenPhim.Focus();
+                txtTen.Focus();
 
                 // Lấy dòng được chọn
                 ListViewItem selectedRow = lvDSP.SelectedItems[0];
 
                 // Lấy thông tin mới từ các trình điều khiển nhập liệu
                 selectedRow.SubItems[0].Text = txtMaDon.Text;
-                selectedRow.SubItems[1].Text = txtTenPhim.Text;
+                selectedRow.SubItems[1].Text = txtTen.Text;
                 selectedRow.SubItems[2].Text = txtQuocGia.Text;
 
                 // Lấy thể loại mới và cập nhật RadioButton tương ứng
@@ -473,8 +473,8 @@ namespace QuanLyRapChieuPhim
                     var phimToUpdate = db.Phims.FirstOrDefault(p => p.MaDon == txtMaDon.Text);
                     if (phimToUpdate != null)
                     {
-                        phimToUpdate.TenPhim = txtTenPhim.Text;
-                        phimToUpdate.QuocGia = txtTenPhim.Text;
+                        phimToUpdate.TenPhim = txtTen.Text;
+                        phimToUpdate.QuocGia = txtTen.Text;
                         phimToUpdate.TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động";
                         phimToUpdate.NgayCongChieu = dtNgayCongChieu.Value;
                         if (int.TryParse(txtDotuoi.Text, out int doTuoi))

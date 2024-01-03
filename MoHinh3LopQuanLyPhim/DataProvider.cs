@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.SqlClient;
+﻿using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.SqlClient;
 using System.Windows.Forms;
 
 namespace MoHinh3LopQuanLyPhim
@@ -18,7 +14,7 @@ namespace MoHinh3LopQuanLyPhim
             get
             {
                 if (instance == null)
-                    instance = new DataProvider();  
+                    instance = new DataProvider();
                 return instance;
             }
         }

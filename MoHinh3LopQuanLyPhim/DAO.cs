@@ -23,16 +23,10 @@ namespace MoHinh3LopQuanLyPhim
             string sql = "SELECT * FROM Phim";
             return DataProvider.Instance.execSql(sql);
         }
-        public bool LuuPhim2D(GiaVe2D ph)
+        public bool LuuPhim(Phims ph)
         {
-            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCongChieu, DoTuoiQuyDinh, PhuThuGheDoi, DinhDang)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCongChieu, @DoTuoiQuyDinh, @PhuThuGheDoi, @DinhDang )";
-            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.PhuThuGheDoi, ph.DinhDang };
-            return DataProvider.Instance.execNonSql(sql, prms) > 0;
-        }
-        public bool LuuPhim3D(GiaVe3D ph)
-        {
-            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCongChieu, DoTuoiQuyDinh, PhuThuSuatChieuDacBiet, DinhDang)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCongChieu, @DoTuoiQuyDinh, @PhuThuSuatChieuDacBiet, @DinhDang )";
-            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCongChieu, ph.DoTuoi, ph.phuThuDacBiet, ph.DinhDang};
+            string sql = "INSERT INTO Phim(MaDon, TenPhim, QuocGia, TheLoai, NgayCC, DoTuoi, GheDoi, DacBiet, DinhDang, Doanhthu)" + "VALUES ( @MaDon, @TenPhim, @QuocGia, @TheLoai, @NgayCC, @DoTuoi, @GheDoi, @DacBiet, @DinhDang, @Doanhthu )";
+            Object[] prms = new object[] { ph.MaDon, ph.TenPhim, ph.QuocGia, ph.TheLoai, ph.NgayCC, ph.DoTuoi, ph.GheDoi, ph.DacBiet, ph.DinhDang, ph.Doanhthu };
             return DataProvider.Instance.execNonSql(sql, prms) > 0;
         }
 
@@ -60,32 +54,25 @@ namespace MoHinh3LopQuanLyPhim
                 return false;
             }
         }
-        public bool SuaPhim2D(GiaVe2D giaVe2D, string madon)
+        public bool SuaPhim(Phims phims, string madon)
         {
-            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh = @DoTuoiQuyDinh, PhuThuGheDoi = @PhuThuGheDoi, DinhDang = @DinhDang" +
+            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCC = @NgayCC, DoTuoi = @DoTuoi, GheDoi = @GheDoi, DacBiet = @DacBiet, DinhDang = @DinhDang, Doanhthu = @Doanhthu" +
                 " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { giaVe2D.TenPhim, giaVe2D.QuocGia, giaVe2D.TheLoai, giaVe2D.NgayCongChieu, giaVe2D.DoTuoi, giaVe2D.PhuThuGheDoi, giaVe2D.DinhDang, madon };
+            object[] prms = new object[] { phims.TenPhim, phims.QuocGia, phims.TheLoai, phims.NgayCC, phims.DoTuoi, phims.GheDoi, phims.DacBiet, phims.DinhDang, phims.Doanhthu, madon };
             return DataProvider.Instance.execNonSql(query, prms)>0;
         }
 
-        public bool SuaPhim3D(GiaVe3D giaVe3D, string madon)
-        {
-            string query = "UPDATE Phim SET TenPhim = @TenPhim, QuocGia = @QuocGia, TheLoai = @TheLoai, NgayCongChieu = @NgayCongChieu, DoTuoiQuyDinh = @DoTuoiQuyDinh, PhuThuSuatChieuDacBiet = @PhuThuSuatChieuDacBiet, DinhDang = @DinhDang" +
-                " WHERE MaDon = @MaDon";
-            object[] prms = new object[] { giaVe3D.TenPhim, giaVe3D.QuocGia, giaVe3D.TheLoai, giaVe3D.NgayCongChieu, giaVe3D.DoTuoi, giaVe3D.phuThuDacBiet, giaVe3D.DinhDang, madon };
-            return DataProvider.Instance.execNonSql(query, prms) > 0;
-        }
         public DataTable SapXepPhims()
         {
-            string query = $"SELECT * FROM Phim ORDER BY NgayCongChieu ASC, DoTuoiQuyDinh DESC";
+            string query = $"SELECT * FROM Phim ORDER BY NgayCC ASC, DoTuoi DESC";
             return DataProvider.Instance.execSql(query);
         }
         public DataTable ThongKe()
         {
             string query = $"SELECT DinhDang, " +
                 $"COUNT(*) AS TongSoLuong, " +
-                $"SUM(CASE WHEN DinhDang = '2D' THEN PhuThuGheDoi ELSE 0 END) AS TongDoanhThu2D,    " +
-                $"SUM(CASE WHEN DinhDang = '3D' THEN PhuThuSuatChieuDacBiet ELSE 0 END) AS TongDoanhThu3D " +
+                $"SUM(CASE WHEN DinhDang = '2D' THEN GheDoi ELSE 0 END) AS TongDoanhThu2D,    " +
+                $"SUM(CASE WHEN DinhDang = '3D' THEN DacBiet ELSE 0 END) AS TongDoanhThu3D " +
                 $"FROM Phim " +
                 $"GROUP BY DinhDang;";
             return DataProvider.Instance.execSql(query);

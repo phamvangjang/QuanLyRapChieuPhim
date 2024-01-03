@@ -30,25 +30,25 @@
         {
             this.lblTieuDe = new System.Windows.Forms.Label();
             this.grbTTP = new System.Windows.Forms.GroupBox();
-            this.txtPhuthudacbiet = new System.Windows.Forms.TextBox();
-            this.lblPhuthudacbiet = new System.Windows.Forms.Label();
-            this.txtPhuthughedoi = new System.Windows.Forms.TextBox();
-            this.lblPhuThuGheDoi = new System.Windows.Forms.Label();
+            this.txtDacbiet = new System.Windows.Forms.TextBox();
+            this.lblDacbiet = new System.Windows.Forms.Label();
+            this.txtGhedoi = new System.Windows.Forms.TextBox();
+            this.lblGheDoi = new System.Windows.Forms.Label();
             this.grbDinhdang = new System.Windows.Forms.GroupBox();
             this.rdbtn3D = new System.Windows.Forms.RadioButton();
             this.rdbtn2d = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
-            this.txtDoTuoi = new System.Windows.Forms.TextBox();
+            this.txtDT = new System.Windows.Forms.TextBox();
             this.lblĐoTuoi = new System.Windows.Forms.Label();
-            this.dtNgayCongchieu = new System.Windows.Forms.DateTimePicker();
+            this.dtNCC = new System.Windows.Forms.DateTimePicker();
             this.lblNgayCongChieu = new System.Windows.Forms.Label();
             this.grbTL = new System.Windows.Forms.GroupBox();
-            this.rdbtnHanhDong = new System.Windows.Forms.RadioButton();
-            this.rdbtnTinhCam = new System.Windows.Forms.RadioButton();
+            this.rdbtnHDong = new System.Windows.Forms.RadioButton();
+            this.rdbtnTCam = new System.Windows.Forms.RadioButton();
             this.lblTheLoai = new System.Windows.Forms.Label();
-            this.txtQuocGia = new System.Windows.Forms.TextBox();
+            this.txtQG = new System.Windows.Forms.TextBox();
             this.lblQuocGia = new System.Windows.Forms.Label();
-            this.txtTenPhim = new System.Windows.Forms.TextBox();
+            this.txtTen = new System.Windows.Forms.TextBox();
             this.lblTenphim = new System.Windows.Forms.Label();
             this.txtMaDon = new System.Windows.Forms.TextBox();
             this.lblMaDon = new System.Windows.Forms.Label();
@@ -87,21 +87,21 @@
             // 
             // grbTTP
             // 
-            this.grbTTP.Controls.Add(this.txtPhuthudacbiet);
-            this.grbTTP.Controls.Add(this.lblPhuthudacbiet);
-            this.grbTTP.Controls.Add(this.txtPhuthughedoi);
-            this.grbTTP.Controls.Add(this.lblPhuThuGheDoi);
+            this.grbTTP.Controls.Add(this.txtDacbiet);
+            this.grbTTP.Controls.Add(this.lblDacbiet);
+            this.grbTTP.Controls.Add(this.txtGhedoi);
+            this.grbTTP.Controls.Add(this.lblGheDoi);
             this.grbTTP.Controls.Add(this.grbDinhdang);
             this.grbTTP.Controls.Add(this.label1);
-            this.grbTTP.Controls.Add(this.txtDoTuoi);
+            this.grbTTP.Controls.Add(this.txtDT);
             this.grbTTP.Controls.Add(this.lblĐoTuoi);
-            this.grbTTP.Controls.Add(this.dtNgayCongchieu);
+            this.grbTTP.Controls.Add(this.dtNCC);
             this.grbTTP.Controls.Add(this.lblNgayCongChieu);
             this.grbTTP.Controls.Add(this.grbTL);
             this.grbTTP.Controls.Add(this.lblTheLoai);
-            this.grbTTP.Controls.Add(this.txtQuocGia);
+            this.grbTTP.Controls.Add(this.txtQG);
             this.grbTTP.Controls.Add(this.lblQuocGia);
-            this.grbTTP.Controls.Add(this.txtTenPhim);
+            this.grbTTP.Controls.Add(this.txtTen);
             this.grbTTP.Controls.Add(this.lblTenphim);
             this.grbTTP.Controls.Add(this.txtMaDon);
             this.grbTTP.Controls.Add(this.lblMaDon);
@@ -114,39 +114,39 @@
             this.grbTTP.TabStop = false;
             this.grbTTP.Text = "Thông tin phim";
             // 
-            // txtPhuthudacbiet
+            // txtDacbiet
             // 
-            this.txtPhuthudacbiet.Location = new System.Drawing.Point(274, 390);
-            this.txtPhuthudacbiet.Name = "txtPhuthudacbiet";
-            this.txtPhuthudacbiet.Size = new System.Drawing.Size(119, 30);
-            this.txtPhuthudacbiet.TabIndex = 17;
+            this.txtDacbiet.Location = new System.Drawing.Point(274, 390);
+            this.txtDacbiet.Name = "txtDacbiet";
+            this.txtDacbiet.Size = new System.Drawing.Size(119, 30);
+            this.txtDacbiet.TabIndex = 17;
             // 
-            // lblPhuthudacbiet
+            // lblDacbiet
             // 
-            this.lblPhuthudacbiet.AutoSize = true;
-            this.lblPhuthudacbiet.ForeColor = System.Drawing.Color.Black;
-            this.lblPhuthudacbiet.Location = new System.Drawing.Point(6, 396);
-            this.lblPhuthudacbiet.Name = "lblPhuthudacbiet";
-            this.lblPhuthudacbiet.Size = new System.Drawing.Size(251, 25);
-            this.lblPhuthudacbiet.TabIndex = 16;
-            this.lblPhuthudacbiet.Text = "Phụ thu suất chiếu đặc biệt ";
+            this.lblDacbiet.AutoSize = true;
+            this.lblDacbiet.ForeColor = System.Drawing.Color.Black;
+            this.lblDacbiet.Location = new System.Drawing.Point(6, 396);
+            this.lblDacbiet.Name = "lblDacbiet";
+            this.lblDacbiet.Size = new System.Drawing.Size(251, 25);
+            this.lblDacbiet.TabIndex = 16;
+            this.lblDacbiet.Text = "Phụ thu suất chiếu đặc biệt ";
             // 
-            // txtPhuthughedoi
+            // txtGhedoi
             // 
-            this.txtPhuthughedoi.Location = new System.Drawing.Point(274, 351);
-            this.txtPhuthughedoi.Name = "txtPhuthughedoi";
-            this.txtPhuthughedoi.Size = new System.Drawing.Size(119, 30);
-            this.txtPhuthughedoi.TabIndex = 15;
+            this.txtGhedoi.Location = new System.Drawing.Point(274, 351);
+            this.txtGhedoi.Name = "txtGhedoi";
+            this.txtGhedoi.Size = new System.Drawing.Size(119, 30);
+            this.txtGhedoi.TabIndex = 15;
             // 
-            // lblPhuThuGheDoi
+            // lblGheDoi
             // 
-            this.lblPhuThuGheDoi.AutoSize = true;
-            this.lblPhuThuGheDoi.ForeColor = System.Drawing.Color.Black;
-            this.lblPhuThuGheDoi.Location = new System.Drawing.Point(6, 357);
-            this.lblPhuThuGheDoi.Name = "lblPhuThuGheDoi";
-            this.lblPhuThuGheDoi.Size = new System.Drawing.Size(148, 25);
-            this.lblPhuThuGheDoi.TabIndex = 14;
-            this.lblPhuThuGheDoi.Text = "Phụ thu ghế đôi";
+            this.lblGheDoi.AutoSize = true;
+            this.lblGheDoi.ForeColor = System.Drawing.Color.Black;
+            this.lblGheDoi.Location = new System.Drawing.Point(6, 357);
+            this.lblGheDoi.Name = "lblGheDoi";
+            this.lblGheDoi.Size = new System.Drawing.Size(148, 25);
+            this.lblGheDoi.TabIndex = 14;
+            this.lblGheDoi.Text = "Phụ thu ghế đôi";
             // 
             // grbDinhdang
             // 
@@ -194,12 +194,12 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Định dạng:";
             // 
-            // txtDoTuoi
+            // txtDT
             // 
-            this.txtDoTuoi.Location = new System.Drawing.Point(176, 254);
-            this.txtDoTuoi.Name = "txtDoTuoi";
-            this.txtDoTuoi.Size = new System.Drawing.Size(217, 30);
-            this.txtDoTuoi.TabIndex = 11;
+            this.txtDT.Location = new System.Drawing.Point(176, 254);
+            this.txtDT.Name = "txtDT";
+            this.txtDT.Size = new System.Drawing.Size(217, 30);
+            this.txtDT.TabIndex = 11;
             // 
             // lblĐoTuoi
             // 
@@ -211,13 +211,13 @@
             this.lblĐoTuoi.TabIndex = 10;
             this.lblĐoTuoi.Text = "Độ tuổi quy định:";
             // 
-            // dtNgayCongchieu
+            // dtNCC
             // 
-            this.dtNgayCongchieu.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtNgayCongchieu.Location = new System.Drawing.Point(176, 209);
-            this.dtNgayCongchieu.Name = "dtNgayCongchieu";
-            this.dtNgayCongchieu.Size = new System.Drawing.Size(217, 30);
-            this.dtNgayCongchieu.TabIndex = 9;
+            this.dtNCC.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtNCC.Location = new System.Drawing.Point(176, 209);
+            this.dtNCC.Name = "dtNCC";
+            this.dtNCC.Size = new System.Drawing.Size(217, 30);
+            this.dtNCC.TabIndex = 9;
             // 
             // lblNgayCongChieu
             // 
@@ -231,38 +231,38 @@
             // 
             // grbTL
             // 
-            this.grbTL.Controls.Add(this.rdbtnHanhDong);
-            this.grbTL.Controls.Add(this.rdbtnTinhCam);
+            this.grbTL.Controls.Add(this.rdbtnHDong);
+            this.grbTL.Controls.Add(this.rdbtnTCam);
             this.grbTL.Location = new System.Drawing.Point(134, 145);
             this.grbTL.Name = "grbTL";
             this.grbTL.Size = new System.Drawing.Size(265, 54);
             this.grbTL.TabIndex = 7;
             this.grbTL.TabStop = false;
             // 
-            // rdbtnHanhDong
+            // rdbtnHDong
             // 
-            this.rdbtnHanhDong.AutoSize = true;
-            this.rdbtnHanhDong.ForeColor = System.Drawing.Color.Black;
-            this.rdbtnHanhDong.Location = new System.Drawing.Point(130, 18);
-            this.rdbtnHanhDong.Name = "rdbtnHanhDong";
-            this.rdbtnHanhDong.Size = new System.Drawing.Size(129, 29);
-            this.rdbtnHanhDong.TabIndex = 1;
-            this.rdbtnHanhDong.TabStop = true;
-            this.rdbtnHanhDong.Text = "Hành động";
-            this.rdbtnHanhDong.UseVisualStyleBackColor = true;
+            this.rdbtnHDong.AutoSize = true;
+            this.rdbtnHDong.ForeColor = System.Drawing.Color.Black;
+            this.rdbtnHDong.Location = new System.Drawing.Point(130, 18);
+            this.rdbtnHDong.Name = "rdbtnHDong";
+            this.rdbtnHDong.Size = new System.Drawing.Size(129, 29);
+            this.rdbtnHDong.TabIndex = 1;
+            this.rdbtnHDong.TabStop = true;
+            this.rdbtnHDong.Text = "Hành động";
+            this.rdbtnHDong.UseVisualStyleBackColor = true;
             // 
-            // rdbtnTinhCam
+            // rdbtnTCam
             // 
-            this.rdbtnTinhCam.AutoSize = true;
-            this.rdbtnTinhCam.ForeColor = System.Drawing.Color.Black;
-            this.rdbtnTinhCam.Location = new System.Drawing.Point(13, 17);
-            this.rdbtnTinhCam.Name = "rdbtnTinhCam";
-            this.rdbtnTinhCam.Size = new System.Drawing.Size(114, 29);
-            this.rdbtnTinhCam.TabIndex = 0;
-            this.rdbtnTinhCam.TabStop = true;
-            this.rdbtnTinhCam.Text = "Tình cảm";
-            this.rdbtnTinhCam.UseVisualStyleBackColor = true;
-            this.rdbtnTinhCam.CheckedChanged += new System.EventHandler(this.rdbtnTinhCam_CheckedChanged);
+            this.rdbtnTCam.AutoSize = true;
+            this.rdbtnTCam.ForeColor = System.Drawing.Color.Black;
+            this.rdbtnTCam.Location = new System.Drawing.Point(13, 17);
+            this.rdbtnTCam.Name = "rdbtnTCam";
+            this.rdbtnTCam.Size = new System.Drawing.Size(114, 29);
+            this.rdbtnTCam.TabIndex = 0;
+            this.rdbtnTCam.TabStop = true;
+            this.rdbtnTCam.Text = "Tình cảm";
+            this.rdbtnTCam.UseVisualStyleBackColor = true;
+            this.rdbtnTCam.CheckedChanged += new System.EventHandler(this.rdbtnTinhCam_CheckedChanged);
             // 
             // lblTheLoai
             // 
@@ -274,12 +274,12 @@
             this.lblTheLoai.TabIndex = 6;
             this.lblTheLoai.Text = "Thể loại:";
             // 
-            // txtQuocGia
+            // txtQG
             // 
-            this.txtQuocGia.Location = new System.Drawing.Point(134, 114);
-            this.txtQuocGia.Name = "txtQuocGia";
-            this.txtQuocGia.Size = new System.Drawing.Size(265, 30);
-            this.txtQuocGia.TabIndex = 5;
+            this.txtQG.Location = new System.Drawing.Point(134, 114);
+            this.txtQG.Name = "txtQG";
+            this.txtQG.Size = new System.Drawing.Size(265, 30);
+            this.txtQG.TabIndex = 5;
             // 
             // lblQuocGia
             // 
@@ -291,12 +291,12 @@
             this.lblQuocGia.TabIndex = 4;
             this.lblQuocGia.Text = "Quốc gia:";
             // 
-            // txtTenPhim
+            // txtTen
             // 
-            this.txtTenPhim.Location = new System.Drawing.Point(134, 71);
-            this.txtTenPhim.Name = "txtTenPhim";
-            this.txtTenPhim.Size = new System.Drawing.Size(265, 30);
-            this.txtTenPhim.TabIndex = 3;
+            this.txtTen.Location = new System.Drawing.Point(134, 71);
+            this.txtTen.Name = "txtTen";
+            this.txtTen.Size = new System.Drawing.Size(265, 30);
+            this.txtTen.TabIndex = 3;
             // 
             // lblTenphim
             // 
@@ -390,7 +390,7 @@
             this.grbTacVu.ForeColor = System.Drawing.Color.Blue;
             this.grbTacVu.Location = new System.Drawing.Point(14, 496);
             this.grbTacVu.Name = "grbTacVu";
-            this.grbTacVu.Size = new System.Drawing.Size(1074, 172);
+            this.grbTacVu.Size = new System.Drawing.Size(1074, 102);
             this.grbTacVu.TabIndex = 3;
             this.grbTacVu.TabStop = false;
             this.grbTacVu.Text = "Tác vụ";
@@ -399,9 +399,9 @@
             // 
             this.btnXuatBaoCao.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnXuatBaoCao.ForeColor = System.Drawing.Color.Black;
-            this.btnXuatBaoCao.Location = new System.Drawing.Point(561, 106);
+            this.btnXuatBaoCao.Location = new System.Drawing.Point(952, 29);
             this.btnXuatBaoCao.Name = "btnXuatBaoCao";
-            this.btnXuatBaoCao.Size = new System.Drawing.Size(140, 58);
+            this.btnXuatBaoCao.Size = new System.Drawing.Size(116, 54);
             this.btnXuatBaoCao.TabIndex = 7;
             this.btnXuatBaoCao.Text = "Xuat BC";
             this.btnXuatBaoCao.UseVisualStyleBackColor = false;
@@ -411,9 +411,9 @@
             // 
             this.btnXuatExcel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnXuatExcel.ForeColor = System.Drawing.Color.Black;
-            this.btnXuatExcel.Location = new System.Drawing.Point(378, 106);
+            this.btnXuatExcel.Location = new System.Drawing.Point(811, 28);
             this.btnXuatExcel.Name = "btnXuatExcel";
-            this.btnXuatExcel.Size = new System.Drawing.Size(140, 58);
+            this.btnXuatExcel.Size = new System.Drawing.Size(135, 54);
             this.btnXuatExcel.TabIndex = 6;
             this.btnXuatExcel.Text = "Xuat Excel";
             this.btnXuatExcel.UseVisualStyleBackColor = false;
@@ -423,9 +423,9 @@
             // 
             this.btnThongKe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnThongKe.ForeColor = System.Drawing.Color.Black;
-            this.btnThongKe.Location = new System.Drawing.Point(928, 28);
+            this.btnThongKe.Location = new System.Drawing.Point(680, 28);
             this.btnThongKe.Name = "btnThongKe";
-            this.btnThongKe.Size = new System.Drawing.Size(140, 58);
+            this.btnThongKe.Size = new System.Drawing.Size(116, 54);
             this.btnThongKe.TabIndex = 5;
             this.btnThongKe.Text = "Thống kê ";
             this.btnThongKe.UseVisualStyleBackColor = false;
@@ -435,9 +435,9 @@
             // 
             this.btnSapXep.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnSapXep.ForeColor = System.Drawing.Color.Black;
-            this.btnSapXep.Location = new System.Drawing.Point(745, 28);
+            this.btnSapXep.Location = new System.Drawing.Point(549, 29);
             this.btnSapXep.Name = "btnSapXep";
-            this.btnSapXep.Size = new System.Drawing.Size(140, 58);
+            this.btnSapXep.Size = new System.Drawing.Size(116, 54);
             this.btnSapXep.TabIndex = 4;
             this.btnSapXep.Text = "Sắp xếp ";
             this.btnSapXep.UseVisualStyleBackColor = false;
@@ -447,9 +447,9 @@
             // 
             this.btnSua.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnSua.ForeColor = System.Drawing.Color.Black;
-            this.btnSua.Location = new System.Drawing.Point(561, 28);
+            this.btnSua.Location = new System.Drawing.Point(417, 29);
             this.btnSua.Name = "btnSua";
-            this.btnSua.Size = new System.Drawing.Size(140, 58);
+            this.btnSua.Size = new System.Drawing.Size(116, 54);
             this.btnSua.TabIndex = 3;
             this.btnSua.Text = "Sửa";
             this.btnSua.UseVisualStyleBackColor = false;
@@ -459,9 +459,9 @@
             // 
             this.btnXoa.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnXoa.ForeColor = System.Drawing.Color.Black;
-            this.btnXoa.Location = new System.Drawing.Point(378, 28);
+            this.btnXoa.Location = new System.Drawing.Point(277, 29);
             this.btnXoa.Name = "btnXoa";
-            this.btnXoa.Size = new System.Drawing.Size(140, 58);
+            this.btnXoa.Size = new System.Drawing.Size(116, 54);
             this.btnXoa.TabIndex = 2;
             this.btnXoa.Text = "Xóa";
             this.btnXoa.UseVisualStyleBackColor = false;
@@ -471,9 +471,9 @@
             // 
             this.btnLuu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnLuu.ForeColor = System.Drawing.Color.Black;
-            this.btnLuu.Location = new System.Drawing.Point(192, 28);
+            this.btnLuu.Location = new System.Drawing.Point(147, 29);
             this.btnLuu.Name = "btnLuu";
-            this.btnLuu.Size = new System.Drawing.Size(140, 58);
+            this.btnLuu.Size = new System.Drawing.Size(116, 54);
             this.btnLuu.TabIndex = 1;
             this.btnLuu.Text = "Lưu";
             this.btnLuu.UseVisualStyleBackColor = false;
@@ -483,9 +483,9 @@
             // 
             this.btnThem.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnThem.ForeColor = System.Drawing.Color.Black;
-            this.btnThem.Location = new System.Drawing.Point(9, 28);
+            this.btnThem.Location = new System.Drawing.Point(12, 28);
             this.btnThem.Name = "btnThem";
-            this.btnThem.Size = new System.Drawing.Size(140, 58);
+            this.btnThem.Size = new System.Drawing.Size(116, 54);
             this.btnThem.TabIndex = 0;
             this.btnThem.Text = "Thêm";
             this.btnThem.UseVisualStyleBackColor = false;
@@ -496,7 +496,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.ClientSize = new System.Drawing.Size(1111, 682);
+            this.ClientSize = new System.Drawing.Size(1111, 613);
             this.Controls.Add(this.grbTacVu);
             this.Controls.Add(this.grbDSP);
             this.Controls.Add(this.grbTTP);
@@ -527,25 +527,25 @@
         private System.Windows.Forms.GroupBox grbTTP;
         public System.Windows.Forms.TextBox txtMaDon;
         private System.Windows.Forms.Label lblMaDon;
-        public System.Windows.Forms.TextBox txtQuocGia;
+        public System.Windows.Forms.TextBox txtQG;
         private System.Windows.Forms.Label lblQuocGia;
-        public System.Windows.Forms.TextBox txtTenPhim;
+        public System.Windows.Forms.TextBox txtTen;
         private System.Windows.Forms.Label lblTenphim;
         private System.Windows.Forms.GroupBox grbTL;
         private System.Windows.Forms.Label lblTheLoai;
-        public System.Windows.Forms.DateTimePicker dtNgayCongchieu;
+        public System.Windows.Forms.DateTimePicker dtNCC;
         private System.Windows.Forms.Label lblNgayCongChieu;
-        public System.Windows.Forms.RadioButton rdbtnHanhDong;
-        public System.Windows.Forms.RadioButton rdbtnTinhCam;
-        public System.Windows.Forms.TextBox txtPhuthudacbiet;
-        private System.Windows.Forms.Label lblPhuthudacbiet;
-        public System.Windows.Forms.TextBox txtPhuthughedoi;
-        private System.Windows.Forms.Label lblPhuThuGheDoi;
+        public System.Windows.Forms.RadioButton rdbtnHDong;
+        public System.Windows.Forms.RadioButton rdbtnTCam;
+        public System.Windows.Forms.TextBox txtDacbiet;
+        private System.Windows.Forms.Label lblDacbiet;
+        public System.Windows.Forms.TextBox txtGhedoi;
+        private System.Windows.Forms.Label lblGheDoi;
         private System.Windows.Forms.GroupBox grbDinhdang;
         public System.Windows.Forms.RadioButton rdbtn3D;
         public System.Windows.Forms.RadioButton rdbtn2d;
         private System.Windows.Forms.Label label1;
-        public System.Windows.Forms.TextBox txtDoTuoi;
+        public System.Windows.Forms.TextBox txtDT;
         private System.Windows.Forms.Label lblĐoTuoi;
         private System.Windows.Forms.GroupBox grbDSP;
         public System.Windows.Forms.ListView lvDanhSachphim;
