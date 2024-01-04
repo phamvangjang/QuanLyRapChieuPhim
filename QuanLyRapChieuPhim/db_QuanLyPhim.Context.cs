@@ -13,10 +13,10 @@ namespace QuanLyRapChieuPhim
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QuanLyDoanhThuPhimEntities : DbContext
+    public partial class QuanLyDoanhThuPhimEntities1 : DbContext
     {
-        public QuanLyDoanhThuPhimEntities()
-            : base("name=QuanLyDoanhThuPhimEntities")
+        public QuanLyDoanhThuPhimEntities1()
+            : base("name=QuanLyDoanhThuPhimEntities1")
         {
         }
     
@@ -26,5 +26,6 @@ namespace QuanLyRapChieuPhim
         }
     
         public virtual DbSet<Phim> Phims { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
     }
 }

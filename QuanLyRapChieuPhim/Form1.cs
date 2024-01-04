@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
 using System.Drawing;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace QuanLyRapChieuPhim
         {
             InitializeComponent();
         }
-        QuanLyDoanhThuPhimEntities db;
+        QuanLyDoanhThuPhimEntities1 _db = new QuanLyDoanhThuPhimEntities1();
         //dong chuong trinh
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -28,25 +29,8 @@ namespace QuanLyRapChieuPhim
         //chay chuong trinh
         private void Form1_Load(object sender, System.EventArgs e)
         {
-            rdoTinhCam.Checked = true;
-            rdo2D.Checked = true;
-            db = new QuanLyDoanhThuPhimEntities();
-            //load list view
-            db.Phims.ToList().ForEach(p =>
-            {
-                ListViewItem listViewItem = new ListViewItem(p.MaDon);
-                listViewItem.SubItems.Add(p.TenPhim);
-                listViewItem.SubItems.Add(p.QuocGia);
-                listViewItem.SubItems.Add(p.TheLoai);
-                //listViewItem.SubItems.Add(p.NgayCongChieu?.ToString("dd/MM/yyyy"));
-                listViewItem.SubItems.Add(p.NgayCongChieu?.ToString("MM/dd/yyyy"));
-                listViewItem.SubItems.Add(p.DoTuoiQuyDinh.ToString());
-                listViewItem.SubItems.Add(p.PhuThuGheDoi.ToString());
-                listViewItem.SubItems.Add(p.PhuThuSuatChieuDacBiet.ToString());
-
-                lvDSP.Items.Add(listViewItem);
-            });
-            HighlightRecentMovies();
+            Reset();
+            ResetListView(_db.Phims.ToList());
         }
 
         private void rdoTinhCam_CheckedChanged(object sender, System.EventArgs e)
@@ -58,10 +42,10 @@ namespace QuanLyRapChieuPhim
         {
             if (rdo2D.Checked)
             {
-                txtPhuthughedoi.Visible = true;
-                txtPhuThudacbiet.Visible = false;
-                lblPhuthughedoi.Visible = true;
-                lblPhuthudacbiet.Visible = false;
+                txtGhedoi.Visible = true;
+                txtDacbiet.Visible = false;
+                lblGhedoi.Visible = true;
+                lblDacbiet.Visible = false;
             }
         }
 
@@ -69,24 +53,49 @@ namespace QuanLyRapChieuPhim
         {
             if (rdo3D.Checked)
             {
-                txtPhuthughedoi.Visible = false;
-                txtPhuThudacbiet.Visible = true;
-                lblPhuthudacbiet.Visible = true;
-                lblPhuthughedoi.Visible = false;
+                txtGhedoi.Visible = false;
+                txtDacbiet.Visible = true;
+                lblDacbiet.Visible = true;
+                lblGhedoi.Visible = false;
             }
         }
-        //Nut them
+        
+        private void ResetListView(IEnumerable<Phim> phims)
+        {
+            lvDSP.Items.Clear();
+            foreach (var a in phims)
+            {
+                ListViewItem listViewItem = new ListViewItem(a.MaDon);
+                listViewItem.SubItems.Add(a.TenPhim.ToString());
+                listViewItem.SubItems.Add(a.TheLoai.ToString());
+                listViewItem.SubItems.Add(a.NgayCC.Value.ToString("dd/MM/yyyy"));
+                DateTime ngayht = DateTime.Now;
+                TimeSpan timeDifference = DateTime.Parse(a.NgayCC.ToString()) - ngayht;
+                if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
+                {
+                    listViewItem.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
+                }
+
+                lvDSP.Items.Add(listViewItem);
+            }
+        }
+        
         public void Reset()
         {
+            foreach (ListViewItem listViewItem in lvDSP.Items)
+            {
+                listViewItem.Selected = false;   
+            }
             // Xóa dữ liệu trong các TextBox nhập liệu
             txtMaDon.Text = string.Empty;
-            txtTenPhim.Text = string.Empty;
-            txtQuocGia.Text = string.Empty;
-            txtDotuoi.Text = string.Empty;
-            rdo2D.Checked = true;
+            txtTen.Text = string.Empty;
+            txtQG.Text = string.Empty;
             rdoTinhCam.Checked = true;
-            txtPhuThudacbiet.Text = string.Empty;
-            txtPhuthughedoi.Text = string.Empty;
+            dtNgayCC.Value=DateTime.Now;
+            txtDT.Text = string.Empty;
+            rdo2D.Checked = true;
+            txtDacbiet.Text = string.Empty;
+            txtGhedoi.Text = string.Empty;
 
             // Gán giá trị mặc định cho các TextBox nhập liệu
             txtMaDon.Focus();
@@ -95,473 +104,271 @@ namespace QuanLyRapChieuPhim
         private void btnThem_Click(object sender, System.EventArgs e)
         {
             Reset();
-            SetEditMode();
+            txtMaDon.Enabled = true;
+            txtMaDon.Focus();
         }
 
-        //nut luu
+        private new bool Validate()
+        {
+            if (string.IsNullOrEmpty(txtMaDon.Text) || string.IsNullOrEmpty(txtTen.Text) || string.IsNullOrEmpty(txtQG.Text) || string.IsNullOrEmpty(txtDT.Text) || (string.IsNullOrEmpty(txtGhedoi.Text) && rdo2D.Checked) || (string.IsNullOrEmpty(txtDacbiet.Text) && rdo3D.Checked))
+            {
+                MessageBox.Show("Thông tin không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (dtNgayCC.Value < DateTime.Now)
+            {
+                MessageBox.Show("Ngày công chiếu không được nhỏ hơn ngày hiện tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (txtDT.Text.Any(n => !char.IsDigit(n)))
+            {
+                MessageBox.Show("Độ tuối phải là số dương", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (txtGhedoi.Text.Any(n => !char.IsDigit(n)) && rdo2D.Checked)
+            {
+                MessageBox.Show("Phụphim phải là số dương!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            if (txtDacbiet.Text.Any(n => !char.IsDigit(n)) && rdo3D.Checked)
+            {
+                MessageBox.Show("Phụphim phải là số dương!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            return true;
+        }
+
         private void btnLuu_Click(object sender, System.EventArgs e)
         {
             // validate
-            // Kiểm tra thông tin có hợp lệ
-            if (string.IsNullOrEmpty(txtMaDon.Text))
+            if (Validate())
             {
-                MessageBox.Show("Mã phim không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtTenPhim.Text))
-            {
-                MessageBox.Show("Tên phim không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (string.IsNullOrEmpty(txtQuocGia.Text))
-            {
-                MessageBox.Show("Quốc gia không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            DateTime ngayCongChieu;
-            if (!DateTime.TryParse(dtNgayCongChieu.Text, out ngayCongChieu))
-            {
-                MessageBox.Show("Ngày công chiếu không hợp lệ!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            /*
-            if (ngayCongChieu > DateTime.Now)
-            {
-                MessageBox.Show("Ngày công chiếu không được lớn hơn ngày hiện tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            */
-            if (string.IsNullOrEmpty(txtDotuoi.Text))
-            {
-                MessageBox.Show("Độ tuổi không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            //luu vao db
-            var p = new Phim
-            {
-                MaDon = txtMaDon.Text,
-                TenPhim = txtTen.Text,
-                QuocGia = txtQuocGia.Text,
-                TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động",
-                NgayCongChieu = dtNgayCongChieu.Value
-            };
-
-            // Kiểm tra và chuyển đổi DoTuoiQuyDinh thành kiểu int
-            if (int.TryParse(txtDotuoi.Text, out int doTuoi))
-            {
-                p.DoTuoiQuyDinh = doTuoi;
-            }
-            /*
-            else
-            {
-                // Xử lý lỗi chuyển đổi dữ liệu cho DoTuoiQuyDinh
-                MessageBox.Show("Lỗi chuyển đổi dữ liệu từ TextBox sang int (DoTuoiQuyDinh).!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            */
-            // Kiểm tra và chuyển đổi PhuThuGheDoi thành kiểu float
-            if (float.TryParse(txtPhuthughedoi.Text, out float phuThuGheDoi))
-            {
-                p.PhuThuGheDoi = phuThuGheDoi;
-            }
-            /*
-            else
-            {
-                // Xử lý lỗi chuyển đổi dữ liệu cho PhuThuGheDoi
-                MessageBox.Show("Lỗi chuyển đổi dữ liệu từ TextBox sang float (PhuThuGheDoi)!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            */
-            // Kiểm tra và chuyển đổi PhuThuSuatChieuDacBiet thành kiểu float
-            if (float.TryParse(txtPhuThudacbiet.Text, out float phuThuSuatChieuDacBiet))
-            {
-                p.PhuThuSuatChieuDacBiet = phuThuSuatChieuDacBiet;
-            }
-            /*
-            else
-            {
-                // Xử lý lỗi chuyển đổi dữ liệu cho PhuThuSuatChieuDacBiet
-                MessageBox.Show("Lỗi chuyển đổi dữ liệu từ TextBox sang float (PhuThuSuatChieuDacBiet)!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            */
-            // Thêm đối tượng vào DbContext và lưu thay đổi
-            MessageBox.Show("Dữ liệu đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            Reset();
-            db.Phims.Add(p);
-            db.SaveChanges();
-
-
-            //show infomation in listview
-            db = new QuanLyDoanhThuPhimEntities();
-            //load list view again
-            lvDSP.Items.Clear();
-            db.Phims.ToList().ForEach(ph =>
-            {
-                ListViewItem listViewItem = new ListViewItem(ph.MaDon);
-                listViewItem.SubItems.Add(ph.TenPhim);
-                listViewItem.SubItems.Add(ph.QuocGia);
-                listViewItem.SubItems.Add(ph.TheLoai);
-                listViewItem.SubItems.Add(ph.NgayCongChieu?.ToString("MM/dd/yyyy"));
-                listViewItem.SubItems.Add(ph.DoTuoiQuyDinh.ToString());
-                listViewItem.SubItems.Add(ph.PhuThuGheDoi.ToString());
-                listViewItem.SubItems.Add(ph.PhuThuSuatChieuDacBiet.ToString());
-
-                lvDSP.Items.Add(listViewItem);
-            });
-            // Chọn dòng dữ liệu mới được thêm vào
-            int index = lvDSP.Items.Count - 1; // Index của dòng cuối cùng (dòng mới nhất)
-            if (index >= 0)
-            {
-                lvDSP.Items[index].Selected = true;
-                lvDSP.Select(); // Đảm bảo rằng ListView đang được chọn
-            }
-            HighlightRecentMovies();
-        }
-        //to nen vang phim duoc chieu trong tuan gan nhat
-        private void HighlightRecentMovies()
-        {
-            DateTime currentDate = DateTime.Now;
-
-            foreach (ListViewItem item in lvDSP.Items)
-            {
-                /*
-                DateTime ngayCongChieu = DateTime.Parse(item.SubItems[4].Text); // Giả sử ngày công chiếu là cột thứ 5 trong ListView
-                TimeSpan timeDifference = currentDate - ngayCongChieu;
-
-                if (timeDifference.TotalDays <= 7) // Nếu phim công chiếu trong vòng 7 ngày
+                bool validate = _db.Phims.Any(a => a.MaDon == txtMaDon.Text);
+                if (validate)
                 {
-                    item.BackColor = Color.Yellow; // Tô nền vàng cho dòng dữ liệu
+                    MessageBox.Show("Mã đơn đã tồn tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    item.BackColor = Color.White; // Đặt lại nền mặc định nếu không phải phim công chiếu trong vòng 7 ngày
-                }
-                */
-                string ngayCongChieuString = item.SubItems[4].Text; // Giả sử ngày công chiếu là cột thứ 5 trong ListView
-
-                // Kiểm tra định dạng của chuỗi ngày công chiếu
-                if (DateTime.TryParse(ngayCongChieuString, out DateTime ngayCongChieu))
-                {
-                    TimeSpan timeDifference = currentDate - ngayCongChieu;
-
-                    if (timeDifference.TotalDays <= 7) // Nếu phim công chiếu trong vòng 7 ngày
+                    float ptghedoi = 0;
+                    float ptdacbiet = 0;
+                    float dt = 0;
+                    if (rdo2D.Checked)
                     {
-                        item.BackColor = Color.Yellow; // Tô nền vàng cho dòng dữ liệu
+                        ptghedoi+=(float.Parse(txtGhedoi.Text));
+                        dt += (110000 + ptghedoi);
                     }
                     else
                     {
-                        item.BackColor = Color.White; // Đặt lại nền mặc định nếu không phải phim công chiếu trong vòng 7 ngày
+                        ptdacbiet=float.Parse(txtDacbiet.Text);
+                        dt += (210000 + ptdacbiet);
                     }
-                }
-                else
-                {
-                    // Xử lý lỗi định dạng ngày không hợp lệ
-                    MessageBox.Show($"Lỗi định dạng ngày không hợp lệ: {ngayCongChieuString}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    //save to db
+                    _db.Phims.Add(new Phim() { MaDon = txtMaDon.Text, TenPhim = txtTen.Text, QuocGia = txtQG.Text, TheLoai = rdoTinhCam.Checked ? "Tình cám" : "Hành động", NgayCC = dtNgayCC.Value, DoTuoi = int.Parse(txtDT.Text), GheDoi = ptghedoi, DacBiet = ptdacbiet, DinhDang = rdo2D.Checked ? "2D" : "3D", Doanhthu = dt });
+                    _db.SaveChanges();
+
+                    //show to listview
+                    ListViewItem listViewItem = new ListViewItem(txtMaDon.Text);
+                    listViewItem.SubItems.Add(txtTen.Text);
+                    listViewItem.SubItems.Add(rdoTinhCam.Checked ? "Tình cám" : "Hành động");
+                    listViewItem.SubItems.Add(dtNgayCC.Value.ToString("dd/MM/yyyy"));
+
+                    //hight light to listview
+                    /*
+                    DateTime ngayht = DateTime.Now;
+                    TimeSpan timeDifference = DateTime.Parse(dtNgayCC.ToString()) - ngayht;
+                    if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
+                    {
+                        listViewItem.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
+                    }
+                    */
+                    lvDSP.Items.Add(listViewItem);
+                    MessageBox.Show("Đã thêm thú cưng thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    Reset();
                 }
             }
         }
-        private void SetReadOnlyMode()
-        {
-            txtMaDon.ReadOnly = true;
-            txtTenPhim.ReadOnly = true;
-            txtQuocGia.ReadOnly = true;
-            rdoTinhCam.Enabled = false;
-            rdoHanhDong.Enabled = false;
-            dtNgayCongChieu.Enabled = false;
-            txtDotuoi.ReadOnly = true;
-            rdo2D.Enabled = false;
-            rdo3D.Enabled = false;
-            txtPhuthughedoi.ReadOnly = true;
-            txtPhuThudacbiet.ReadOnly = true;
-        }
-        private void SetEditMode()
-        {
-            txtMaDon.ReadOnly = false;
-            txtTen.ReadOnly = false;
-            txtQuocGia.ReadOnly = false;
-            rdoTinhCam.Enabled = true;
-            rdoHanhDong.Enabled = true;
-            dtNgayCongChieu.Enabled = true;
-            txtDotuoi.ReadOnly = false;
-            rdo2D.Enabled = true;
-            rdo3D.Enabled = true;
-            txtPhuthughedoi.ReadOnly = false;
-            txtPhuThudacbiet.ReadOnly = false;
-            txtMaDon.Focus();
-        }
-        //6. listview danh sach phim
+        
         private void lvDSP_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lvDSP.SelectedItems.Count > 0)
             {
-                // Lấy dòng được chọn
-                ListViewItem selectedRow = lvDSP.SelectedItems[0];
-
-                // Hiển thị dữ liệu từ dòng được chọn vào các điều khiển
-                txtMaDon.Text = selectedRow.SubItems[0].Text;
-                txtTen.Text = selectedRow.SubItems[1].Text;
-                txtQuocGia.Text = selectedRow.SubItems[2].Text;
-
-                // Cột thứ 3 là thể loại (sử dụng RadioButton)
-                /*
-                rdoTinhCam.Checked = selectedRow.SubItems[3].Text.Equals("Tình cảm", StringComparison.OrdinalIgnoreCase);
-                rdoHanhDong.Checked = selectedRow.SubItems[3].Text.Equals("Hành động", StringComparison.OrdinalIgnoreCase);
-                */
-                // Cột thứ 3 là thể loại (sử dụng RadioButton)
-                string theLoai = selectedRow.SubItems[3].Text;
-                if (theLoai.Equals("Tình cảm", StringComparison.OrdinalIgnoreCase))
+                //get id in listview
+                string madon = lvDSP.SelectedItems[0].SubItems[0].Text;
+                txtMaDon.Enabled = false;
+                //find in _db if exists ?
+                var phim = _db.Phims.SingleOrDefault(z => z.MaDon == madon);
+                if (phim!=null)
                 {
-                    rdoTinhCam.Checked = true;
-                    rdoHanhDong.Checked = false;
-                }
-                else if (theLoai.Equals("Hành động", StringComparison.OrdinalIgnoreCase))
-                {
-                    rdoTinhCam.Checked = false;
-                    rdoHanhDong.Checked = true;
-                }
-
-                // Cột thứ 4 là ngày công chiếu (kiểu DateTime)
-                string ngayCongChieuString = selectedRow.SubItems[4].Text;
-                if (DateTime.TryParse(ngayCongChieuString, out DateTime ngayCongChieu))
-                {
-                    dtNgayCongChieu.Value = ngayCongChieu;
+                    txtMaDon.Text = phim.MaDon.Trim();
+                    txtTen.Text = phim.TenPhim.Trim();
+                    txtQG.Text = phim.QuocGia.Trim();
+                    if(phim.TheLoai== "Tình cám")
+                    {
+                        rdoTinhCam.Checked = true;
+                    }
+                    else
+                    {
+                        rdoHanhDong.Checked = true;
+                    }
+                    dtNgayCC.Value=phim.NgayCC.Value;
+                    txtDT.Text = (phim.DoTuoi.ToString());
+                    if (phim.DinhDang == "2D")
+                    {
+                        rdo2D.Checked = true;
+                        txtGhedoi.Text=phim.GheDoi.ToString();
+                        txtDacbiet.Clear();
+                    }
+                    else
+                    {
+                        rdo3D.Checked = true;
+                        txtDacbiet.Text=phim.DacBiet.ToString();
+                        txtGhedoi.Clear ();
+                    }
                 }
                 else
                 {
-                    MessageBox.Show($"Lỗi định dạng ngày không hợp lệ: {ngayCongChieuString}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    MessageBox.Show("Không tìm thấy mã phim!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-                // Cột thứ 5 là độ tuổi (kiểu số nguyên)
-                txtDotuoi.Text = selectedRow.SubItems[5].Text;
-
-
-                /*
-                // Cột thứ 6 là phụ thu ghế đôi (RadioButton 2D)
-                rdo2D.Checked = selectedRow.SubItems[6].Text.Equals("1", StringComparison.OrdinalIgnoreCase);
-
-                // Cột thứ 7 là phụ thu suất chiếu đặc biệt (RadioButton 3D)
-                rdo3D.Checked = selectedRow.SubItems[7].Text.Equals("1", StringComparison.OrdinalIgnoreCase);
-                */
-                // Cột thứ 6 là phụ thu ghế đôi
-                bool hasPhuThuGheDoi = !string.IsNullOrEmpty(selectedRow.SubItems[6].Text);
-
-                // Cột thứ 7 là phụ thu suất chiếu đặc biệt
-                bool hasPhuThuChieuDacBiet = !string.IsNullOrEmpty(selectedRow.SubItems[7].Text);
-
-                // Thiết lập giá trị cho RadioButton và hiển thị/ẩn TextBox tương ứng
-                if (hasPhuThuGheDoi)
-                {
-                    rdo2D.Checked = true;
-                    rdo3D.Checked = false;
-
-                    txtPhuthughedoi.Visible = true;
-                    txtPhuThudacbiet.Visible = false;
-
-                    // Hiển thị giá trị từ cột thứ 6 trong TextBox
-                    txtPhuthughedoi.Text = selectedRow.SubItems[6].Text;
-                }
-                else if (hasPhuThuChieuDacBiet)
-                {
-                    rdo2D.Checked = false;
-                    rdo3D.Checked = true;
-
-                    txtPhuthughedoi.Visible = false;
-                    txtPhuThudacbiet.Visible = true;
-
-                    // Hiển thị giá trị từ cột thứ 7 trong TextBox
-                    txtPhuThudacbiet.Text = selectedRow.SubItems[7].Text;
-                }
-                //SetReadOnlyMode();
-                txtMaDon.ReadOnly = true;
             }
-
         }
-        //7. nut xoa
+
         private void btnXoa_Click(object sender, EventArgs e)
         {
             if (lvDSP.SelectedItems.Count > 0)
             {
-                // Hiển thị hộp thoại xác nhận
-                DialogResult result = MessageBox.Show("Bạn có chắc muốn xóa phim này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-                if (result == DialogResult.Yes)
+                if (MessageBox.Show("Bạn có chắc chắn muốn xóa phim này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
-                    // Lấy dòng được chọn
-                    ListViewItem selectedRow = lvDSP.SelectedItems[0];
+                    int index = lvDSP.Items.IndexOf(lvDSP.SelectedItems[0]);
+                    string mathu = lvDSP.SelectedItems[0].SubItems[0].Text.Trim();
 
-                    // Lấy index của dòng để xóa
-                    int indexToRemove = selectedRow.Index;
+                    Phim ph = _db.Phims.Where(p => p.MaDon.Trim() == mathu).SingleOrDefault();
+                    _db.Phims.Remove(ph);
+                    _db.SaveChanges();
 
-                    // Xóa dòng khỏi ListView
-                    lvDSP.Items.Remove(selectedRow);
+                    lvDSP.Items.Remove(lvDSP.SelectedItems[0]);
 
-
-                    // Chọn dòng liền kề sau nếu có
-                    if (indexToRemove < lvDSP.Items.Count)
+                    if (lvDSP.Items.Count > 0)
                     {
-                        lvDSP.Items[indexToRemove].Selected = true;
-                        lvDSP.Select();
+                        if (index < lvDSP.Items.Count)
+                        {
+                            lvDSP.Items[index].Selected = true;
+                        }
+                        else
+                        {
+                            Reset();
+                        }
                     }
-                    else if (indexToRemove > 0)
+                    else if (lvDSP.Items.Count == 0)
                     {
-                        // Nếu không có dòng liền kề sau, chọn dòng liền kề trước
-                        lvDSP.Items[indexToRemove - 1].Selected = true;
-                        lvDSP.Select();
-                    }
-                    else
-                    {
-                        // Nếu không còn dòng nào trong ListView, xóa thông tin ở bảng điều khiển và đưa trỏ chuột lên txtMaDon
                         Reset();
-                        txtMaDon.Focus();
                     }
-                    // Lấy thông tin của phim từ dòng được chọn
-                    string maDon = lvDSP.SelectedItems[0].SubItems[0].Text;
-
-                    // Thực hiện xóa từ cơ sở dữ liệu (thực hiện tương ứng với cơ sở dữ liệu của bạn)
-                    var phimToRemove = db.Phims.FirstOrDefault(p => p.MaDon == maDon);
-                    if (phimToRemove != null) { db.Phims.Remove(phimToRemove); db.SaveChanges(); }
                 }
+                MessageBox.Show("Đã xóa phim thành công", "Xác nhận", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
             else
             {
-                MessageBox.Show("Bạn chưa chọn phim nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show("Bạn chưa chọn phim nào để xóa", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        //8. nut sua x
+
         private void btnSua_Click(object sender, EventArgs e)
         {
             if (lvDSP.SelectedItems.Count > 0)
             {
-                txtMaDon.ReadOnly = true;
-                txtTen.Focus();
+                int index = lvDSP.Items.IndexOf(lvDSP.SelectedItems[0]);
+                string maphim = lvDSP.SelectedItems[0].SubItems[0].Text.Trim();
 
-                // Lấy dòng được chọn
-                ListViewItem selectedRow = lvDSP.SelectedItems[0];
-
-                // Lấy thông tin mới từ các trình điều khiển nhập liệu
-                selectedRow.SubItems[0].Text = txtMaDon.Text;
-                selectedRow.SubItems[1].Text = txtTen.Text;
-                selectedRow.SubItems[2].Text = txtQuocGia.Text;
-
-                // Lấy thể loại mới và cập nhật RadioButton tương ứng
-                string theLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động";
-                selectedRow.SubItems[3].Text = theLoai;
-
-                // Lấy ngày công chiếu mới
-                selectedRow.SubItems[4].Text = dtNgayCongChieu.Value.ToString("dd/MM/yyyy");
-
-                // Lấy độ tuổi quy định mới
-                selectedRow.SubItems[5].Text = txtDotuoi.Text;
-
-                // Lấy loại phim mới và cập nhật RadioButton tương ứng
-                string loaiPhim = rdo2D.Checked ? "2D" : "3D";
-                //selectedRow.SubItems[8].Text = loaiPhim;
-
-                // Lấy phụ thu ghế đôi mới
-                selectedRow.SubItems[6].Text = txtPhuthughedoi.Text;
-
-                // Lấy phụ thu suất chiếu đặc biệt mới
-                selectedRow.SubItems[7].Text = txtPhuThudacbiet.Text;
-
-                // Cập nhật dữ liệu trong cơ sở dữ liệu (thực hiện tương ứng với cơ sở dữ liệu của bạn)
-                try
+                Phim phim = _db.Phims.Where(p => p.MaDon.Trim() == maphim).SingleOrDefault();
+                float ptghedoi = 0;
+                float ptdacbiet = 0;
+                float dt = 0;
+                if (rdo2D.Checked)
                 {
-                    // Ví dụ:
-                    var phimToUpdate = db.Phims.FirstOrDefault(p => p.MaDon == txtMaDon.Text);
-                    if (phimToUpdate != null)
-                    {
-                        phimToUpdate.TenPhim = txtTen.Text;
-                        phimToUpdate.QuocGia = txtTen.Text;
-                        phimToUpdate.TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động";
-                        phimToUpdate.NgayCongChieu = dtNgayCongChieu.Value;
-                        if (int.TryParse(txtDotuoi.Text, out int doTuoi))
-                        {
-                            phimToUpdate.DoTuoiQuyDinh = doTuoi;
-                        }
-                        // Kiểm tra và chuyển đổi PhuThuGheDoi thành kiểu float
-                        if (float.TryParse(txtPhuthughedoi.Text, out float phuThuGheDoi))
-                        {
-                            phimToUpdate.PhuThuGheDoi = phuThuGheDoi;
-                        }
-                        // Kiểm tra và chuyển đổi PhuThuSuatChieuDacBiet thành kiểu float
-                        if (float.TryParse(txtPhuThudacbiet.Text, out float phuThuSuatChieuDacBiet))
-                        {
-                            phimToUpdate.PhuThuSuatChieuDacBiet = phuThuSuatChieuDacBiet;
-                        }
-                        // Thêm đối tượng vào DbContext và lưu thay đổi
-                        MessageBox.Show("Dữ liệu đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        db.SaveChanges();
-                    }
+                    ptghedoi = float.Parse(txtGhedoi.Text);
+                    dt += (110000 + ptghedoi);
                 }
-                catch (DbUpdateException ex)
+                else
                 {
-                    // Xử lý exception nếu có lỗi khi cập nhật cơ sở dữ liệu
-                    MessageBox.Show("Lỗi khi cập nhật cơ sở dữ liệu!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
+                    ptdacbiet = float.Parse(txtDacbiet.Text);
+                    dt += (210000 + ptdacbiet);
                 }
 
-                // Chọn lại dòng đang chọn trong ListView
-                selectedRow.Selected = true;
-                lvDSP.Select();
+                if (Validate())
+                {
+                   phim.TenPhim = txtTen.Text;
+                   phim.QuocGia = txtQG.Text;
+                   phim.TheLoai = rdoTinhCam.Checked ? "Tình cám" : "Hành động";
+                   phim.NgayCC = dtNgayCC.Value;
+                   phim.DoTuoi = int.Parse(txtDT.Text);
+                   phim.GheDoi = ptghedoi;
+                   phim.DacBiet=ptdacbiet;
+                   phim.DinhDang = rdo2D.Checked ? "2D" : "3D";
+                   phim.Doanhthu = dt;
+                    _db.SaveChanges();
+                    txtMaDon.Enabled = true;
+                    ResetListView(_db.Phims.ToList());
+                    Reset();
+                    MessageBox.Show("Đã sửa phim thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
+                }
             }
             else
             {
-                MessageBox.Show("Bạn chưa chọn phim nào!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
+                MessageBox.Show("Bạn chưa chọn phim nào để sửa", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            HighlightRecentMovies();
         }
 
         private void btnSapXep_Click(object sender, EventArgs e)
         {
-            // Sắp xếp danh sách phim theo ngày công chiếu tăng dần, nếu cùng ngày thì sắp xếp giảm dần theo độ tuổi quy định
-            var danhSachDaSapXep = lvDSP.Items.Cast<ListViewItem>()
-                .OrderBy(item => DateTime.Parse(item.SubItems[4].Text))
-                .ThenByDescending(item => int.Parse(item.SubItems[5].Text));
-
-            // Xóa tất cả các mục trong ListView
-            lvDSP.Items.Clear();
-
-            // Thêm lại các mục đã sắp xếp
-            lvDSP.Items.AddRange(danhSachDaSapXep.ToArray());
+            try
+            {
+                var sort = _db.Phims.OrderBy(p => p.NgayCC).OrderByDescending(p => p.DoTuoi).ToList();
+                ResetListView(sort);
+                MessageBox.Show("Đã sắp xếp thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnThongKe_Click(object sender, EventArgs e)
         {
-            int tongSoLuong2D = 0;
-            int tongSoLuong3D = 0;
-            double tongDoanhThu2D = 0;
-            double tongDoanhThu3D = 0;
-
-            foreach (ListViewItem item in lvDSP.Items)
+            try
             {
-                int soLuong = 1; // Giả sử mỗi dòng đại diện cho một suất chiếu
-                double phuThuGheDoi = 0;
-                double phuThuSuatChieuDacBiet = 0;
+                var s = from ph in _db.Phims
+                        group ph by ph.DinhDang into g
+                        select new
+                        {
+                            dinhdang = g.Key,
+                            Sophim = g.Count(),
+                            dthu = g.Sum(p => p.Doanhthu)
+                        };
 
-                if (double.TryParse(item.SubItems[6].Text, out phuThuGheDoi) && double.TryParse(item.SubItems[7].Text, out phuThuSuatChieuDacBiet))
+                string message = "Thống kê theo loại phim\n\n";
+
+                foreach (var t in s)
                 {
-                    tongSoLuong2D += soLuong;
-                    tongDoanhThu2D += phuThuGheDoi;
-
-                    tongSoLuong3D += soLuong;
-                    tongDoanhThu3D += phuThuSuatChieuDacBiet;
+                    if (t.dinhdang == "2D")
+                        message += $"Phim 2D:\n";
+                    else
+                        message += $"Phim 3D:\n";
+                    message += $"Số lượng: {t.Sophim}\n";
+                    message += $"Tổng doanh thu: {t.dthu:#,#}\n\n";
                 }
+
+                MessageBox.Show(message, "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
-            // Hiển thị thông báo
-            string thongBao = $"Thống kê:\n\nTổng số lượng phim 2D: {tongSoLuong2D}\nTổng doanh thu 2D: {tongDoanhThu2D:C}\n\nTổng số lượng phim 3D: {tongSoLuong3D}\nTổng doanh thu 3D: {tongDoanhThu3D:C}";
-
-            MessageBox.Show(thongBao, "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            catch (Exception ex)
+            {
+                MessageBox.Show("Lỗi: " + ex.Message, "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnXuatBC_Click(object sender, EventArgs e)
         {
             //Chuẩn bị nguồn dữ liệu
-            var data = db.Phims.Select(p => new { maDon = p.MaDon, QuocGia = p.QuocGia, TenPhim = p.TenPhim, TheLoai = p.TheLoai }).ToList();
+            var data = _db.Phims.Select(p => new { maDon = p.MaDon, QuocGia = p.QuocGia, TenPhim = p.TenPhim, TheLoai = p.TheLoai }).ToList();
             //Gán nguồn dữ liệu cho CrystalReport
             CrystalReport1 rpt = new CrystalReport1();
             rpt.SetDataSource(data);
@@ -584,7 +391,7 @@ namespace QuanLyRapChieuPhim
             excelRange.Value = "DANH MỤC SẢN PHẨM";
 
             //LẤY SP THEO DANH MỤC
-            var catalogs = db.Phims.Select(c => new { MaDon = c.MaDon, TenPhim = c.TenPhim }).ToList();
+            var catalogs = _db.Phims.Select(c => new { MaDon = c.MaDon, TenPhim = c.TenPhim }).ToList();
             int row = 2;
             foreach (var c in catalogs)
             {
@@ -592,7 +399,7 @@ namespace QuanLyRapChieuPhim
                 excelWS.Range["A" + row].Value = c.TenPhim;
                 row++;
                 //Lấy sản phẩm theo danh mục 
-                var products = from p in db.Phims where p.MaDon == c.MaDon select p;
+                var products = from p in _db.Phims where p.MaDon == c.MaDon select p;
                 foreach (var p in products)
                 {
                     excelWS.Range["A" + row].Value = p.MaDon;

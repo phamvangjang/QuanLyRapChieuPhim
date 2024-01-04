@@ -13,13 +13,26 @@
           <Property Name="TenPhim" Type="nvarchar" MaxLength="100" />
           <Property Name="QuocGia" Type="nvarchar" MaxLength="50" />
           <Property Name="TheLoai" Type="nvarchar" MaxLength="50" />
-          <Property Name="NgayCongChieu" Type="datetime" />
-          <Property Name="DoTuoiQuyDinh" Type="int" />
-          <Property Name="PhuThuGheDoi" Type="float" />
-          <Property Name="PhuThuSuatChieuDacBiet" Type="float" />
+          <Property Name="NgayCC" Type="datetime" />
+          <Property Name="DoTuoi" Type="int" />
+          <Property Name="GheDoi" Type="float" />
+          <Property Name="DacBiet" Type="float" />
+          <Property Name="DinhDang" Type="nchar" MaxLength="10" />
+          <Property Name="Doanhthu" Type="float" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityContainer Name="QuanLyDoanhThuPhimModelStoreContainer">
           <EntitySet Name="Phim" EntityType="Self.Phim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema>
     </edmx:StorageModels>
@@ -34,20 +47,33 @@
           <Property Name="TenPhim" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="QuocGia" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TheLoai" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NgayCongChieu" Type="DateTime" Precision="3" />
-          <Property Name="DoTuoiQuyDinh" Type="Int32" />
-          <Property Name="PhuThuGheDoi" Type="Double" />
-          <Property Name="PhuThuSuatChieuDacBiet" Type="Double" />
+          <Property Name="NgayCC" Type="DateTime" Precision="3" />
+          <Property Name="DoTuoi" Type="Int32" />
+          <Property Name="GheDoi" Type="Double" />
+          <Property Name="DacBiet" Type="Double" />
+          <Property Name="DinhDang" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Doanhthu" Type="Double" />
         </EntityType>
-        <EntityContainer Name="QuanLyDoanhThuPhimEntities" annotation:LazyLoadingEnabled="true">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityContainer Name="QuanLyDoanhThuPhimEntities1" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Phims" EntityType="Self.Phim" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
         </EntityContainer>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QuanLyDoanhThuPhimModelStoreContainer" CdmEntityContainer="QuanLyDoanhThuPhimEntities">
+        <EntityContainerMapping StorageEntityContainer="QuanLyDoanhThuPhimModelStoreContainer" CdmEntityContainer="QuanLyDoanhThuPhimEntities1">
           <EntitySetMapping Name="Phims">
             <EntityTypeMapping TypeName="QuanLyDoanhThuPhimModel.Phim">
               <MappingFragment StoreEntitySet="Phim">
@@ -55,10 +81,23 @@
                 <ScalarProperty Name="TenPhim" ColumnName="TenPhim" />
                 <ScalarProperty Name="QuocGia" ColumnName="QuocGia" />
                 <ScalarProperty Name="TheLoai" ColumnName="TheLoai" />
-                <ScalarProperty Name="NgayCongChieu" ColumnName="NgayCongChieu" />
-                <ScalarProperty Name="DoTuoiQuyDinh" ColumnName="DoTuoiQuyDinh" />
-                <ScalarProperty Name="PhuThuGheDoi" ColumnName="PhuThuGheDoi" />
-                <ScalarProperty Name="PhuThuSuatChieuDacBiet" ColumnName="PhuThuSuatChieuDacBiet" />
+                <ScalarProperty Name="NgayCC" ColumnName="NgayCC" />
+                <ScalarProperty Name="DoTuoi" ColumnName="DoTuoi" />
+                <ScalarProperty Name="GheDoi" ColumnName="GheDoi" />
+                <ScalarProperty Name="DacBiet" ColumnName="DacBiet" />
+                <ScalarProperty Name="DinhDang" ColumnName="DinhDang" />
+                <ScalarProperty Name="Doanhthu" ColumnName="Doanhthu" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuanLyDoanhThuPhimModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

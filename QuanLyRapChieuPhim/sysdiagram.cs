@@ -12,17 +12,12 @@ namespace QuanLyRapChieuPhim
     using System;
     using System.Collections.Generic;
     
-    public partial class Phim
+    public partial class sysdiagram
     {
-        public string MaDon { get; set; }
-        public string TenPhim { get; set; }
-        public string QuocGia { get; set; }
-        public string TheLoai { get; set; }
-        public Nullable<System.DateTime> NgayCC { get; set; }
-        public Nullable<int> DoTuoi { get; set; }
-        public Nullable<double> GheDoi { get; set; }
-        public Nullable<double> DacBiet { get; set; }
-        public string DinhDang { get; set; }
-        public Nullable<double> Doanhthu { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }
