@@ -1,9 +1,7 @@
 ﻿using MoHinh3LopQuanLyPhim.Model;
 using System;
-using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace MoHinh3LopQuanLyPhim
 {
@@ -41,10 +39,10 @@ namespace MoHinh3LopQuanLyPhim
             if (rdbtn3D.Checked)
             {
                 txtGhedoi.Visible = false;
-                txtDacbiet.Visible = true;
-                txtGhedoi.Clear();
-                lblDacbiet.Visible = true;
                 lblGheDoi.Visible = false;
+                txtGhedoi.Clear();
+                txtDacbiet.Visible = true;
+                lblDacbiet.Visible = true;
             }
         }
 
@@ -52,11 +50,11 @@ namespace MoHinh3LopQuanLyPhim
         {
             if (rdbtn2d.Checked)
             {
-                txtGhedoi.Visible = true;
+                lblDacbiet.Visible = false;
                 txtDacbiet.Visible = false;
                 txtGhedoi.Clear();
+                txtGhedoi.Visible = true;
                 lblGheDoi.Visible = true;
-                lblDacbiet.Visible = false;
             }
         }
 
@@ -76,24 +74,26 @@ namespace MoHinh3LopQuanLyPhim
             // Gán giá trị mặc định cho các TextBox nhập liệu
             txtMaDon.Focus();
         }
+        
         private void btnThem_Click(object sender, EventArgs e)
         {
             Reset();
             txtMaDon.Enabled = true;
         }
+        
         public new bool Validate
         {
             get
             {
                 // Kiểm tra thông tin có hợp lệ
-                if (string.IsNullOrEmpty(txtMaDon.Text) || string.IsNullOrEmpty(txtTen.Text) || string.IsNullOrEmpty(txtQG.Text) || string.IsNullOrEmpty(txtDT.Text) || string.IsNullOrEmpty(txtGhedoi.Text) || string.IsNullOrEmpty(txtDacbiet.Text))
+                if (string.IsNullOrEmpty(txtMaDon.Text) || string.IsNullOrEmpty(txtTen.Text) || string.IsNullOrEmpty(txtQG.Text) || string.IsNullOrEmpty(txtDT.Text) || (string.IsNullOrEmpty(txtGhedoi.Text) && rdbtn2d.Checked) || (string.IsNullOrEmpty(txtDacbiet.Text) && rdbtn3D.Checked))
                 {
                     MessageBox.Show("Thông tin không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (dtNCC.Value < DateTime.Now)
                 {
-                    MessageBox.Show("Ngày công chiếu không được lớn hơn ngày hiện tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Ngày công chiếu không được nhỏ hơn ngày hiện tại!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
                 if (txtDT.Text.Any(n => !char.IsDigit(n)))
@@ -114,6 +114,7 @@ namespace MoHinh3LopQuanLyPhim
                 return true;
             }
         }
+        
         private void btnLuu_Click(object sender, EventArgs e)
         {
             // Kiểm tra thông tin có hợp lệ
@@ -158,7 +159,7 @@ namespace MoHinh3LopQuanLyPhim
                         // Nếu không còn dòng nào trong ListView, xóa thông tin ở bảng điều khiển và đưa trỏ chuột lên txtMaDon
                         Reset();
                     }
-                    
+
                     // Thực hiện xóa từ cơ sở dữ liệu
                     Bussiness.Instance.XoaThongtinTheoMaDon(maDon);
                     MessageBox.Show("Đã xóa phim thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -194,18 +195,21 @@ namespace MoHinh3LopQuanLyPhim
                 }
                 dtNCC.Text = phim.NgayCC.Date.ToString();
                 txtDT.Text = phim.DoTuoi.ToString();
-                if (phim.DinhDang=="3D")
+                if (phim.DinhDang == "2D")
                 {
-                    rdbtn3D.Checked = true;
-                    txtDacbiet.Text = phim.DacBiet.ToString();
-                    txtGhedoi.Clear();
-                }
-                else if (phim.DinhDang == "2D")
-                {
+                    rdbtn3D.Checked = false;
                     rdbtn2d.Checked = true;
-                    txtGhedoi.Text = phim.GheDoi.ToString();
+                    txtGhedoi.Text = phim.GheDoi.ToString().Trim();
                     txtDacbiet.Clear();
                 }
+                else
+                {
+                    rdbtn2d.Checked = false;
+                    rdbtn3D.Checked = true;
+                    txtDacbiet.Text = phim.DacBiet.ToString().Trim();
+                    txtGhedoi.Clear();
+                }
+                //MessageBox.Show("db "+phim.DacBiet.ToString()+"\n"+"gd "+phim.GheDoi.ToString());
             }
         }
 
@@ -232,7 +236,7 @@ namespace MoHinh3LopQuanLyPhim
 
         private void btnXuatBaoCao_Click(object sender, EventArgs e)
         {
-            
+
         }
 
         private void grbDSP_Enter(object sender, EventArgs e)

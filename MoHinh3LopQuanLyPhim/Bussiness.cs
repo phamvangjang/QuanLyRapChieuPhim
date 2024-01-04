@@ -117,17 +117,10 @@ namespace MoHinh3LopQuanLyPhim
                 phims.TheLoai = dataRow[3].ToString();
                 phims.NgayCC = DateTime.Parse(dataRow[4].ToString());
                 phims.DoTuoi = int.Parse(dataRow[5].ToString());
-                if (dataRow[8].ToString() == "2D")
-                {
-                    phims.GheDoi = float.Parse(dataRow[6].ToString());
-                    phims.DacBiet = 0;
-                }
-                else
-                {
-                    phims.DacBiet = float.Parse(dataRow[7].ToString());
-                    phims.GheDoi = 0;
-                }
+                phims.GheDoi = float.Parse(dataRow[6].ToString());
+                phims.DacBiet = float.Parse(dataRow[7].ToString());
                 phims.DinhDang = dataRow[8].ToString();
+                phims.Doanhthu = float.Parse(dataRow[9].ToString());
             }
             return phims;
         }
@@ -221,7 +214,7 @@ namespace MoHinh3LopQuanLyPhim
             MessageBox.Show("Số lượng phim 2D: " + sl2d + "(Phim)\n" +
                             "Doanh thu phim 2D: " + dt2d + "(vnd)\n\n" +
                             "Số lượng phim 3D: " + sl3d + "(phim)\n" +
-                            "Doanh thu phim 3D: " + dt3d,
+                            "Doanh thu phim 3D: " + dt3d+ "(vnd)",
                             "Thống kê", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
         public void XuatExcel()
