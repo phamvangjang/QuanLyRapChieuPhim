@@ -79,6 +79,7 @@ namespace MoHinh3LopQuanLyPhim
         {
             Reset();
             txtMaDon.Enabled = true;
+            txtMaDon.Focus();
         }
         
         public new bool Validate
