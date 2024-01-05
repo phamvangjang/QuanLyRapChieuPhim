@@ -36,8 +36,8 @@
             this.lblDacbiet = new System.Windows.Forms.Label();
             this.lblĐindang = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.rdo3D = new System.Windows.Forms.RadioButton();
-            this.rdo2D = new System.Windows.Forms.RadioButton();
+            this.rdbtn3D = new System.Windows.Forms.RadioButton();
+            this.rdbtn2D = new System.Windows.Forms.RadioButton();
             this.txtDT = new System.Windows.Forms.TextBox();
             this.lblDotuoi = new System.Windows.Forms.Label();
             this.dtNgayCC = new System.Windows.Forms.DateTimePicker();
@@ -116,7 +116,7 @@
             // 
             // txtGhedoi
             // 
-            this.txtGhedoi.Location = new System.Drawing.Point(180, 366);
+            this.txtGhedoi.Location = new System.Drawing.Point(180, 326);
             this.txtGhedoi.Name = "txtGhedoi";
             this.txtGhedoi.Size = new System.Drawing.Size(179, 30);
             this.txtGhedoi.TabIndex = 17;
@@ -124,7 +124,7 @@
             // lblGhedoi
             // 
             this.lblGhedoi.AutoSize = true;
-            this.lblGhedoi.Location = new System.Drawing.Point(9, 370);
+            this.lblGhedoi.Location = new System.Drawing.Point(9, 330);
             this.lblGhedoi.Name = "lblGhedoi";
             this.lblGhedoi.Size = new System.Drawing.Size(154, 25);
             this.lblGhedoi.TabIndex = 16;
@@ -132,7 +132,7 @@
             // 
             // txtDacbiet
             // 
-            this.txtDacbiet.Location = new System.Drawing.Point(180, 320);
+            this.txtDacbiet.Location = new System.Drawing.Point(180, 371);
             this.txtDacbiet.Name = "txtDacbiet";
             this.txtDacbiet.Size = new System.Drawing.Size(180, 30);
             this.txtDacbiet.TabIndex = 15;
@@ -140,7 +140,7 @@
             // lblDacbiet
             // 
             this.lblDacbiet.AutoSize = true;
-            this.lblDacbiet.Location = new System.Drawing.Point(10, 324);
+            this.lblDacbiet.Location = new System.Drawing.Point(10, 375);
             this.lblDacbiet.Name = "lblDacbiet";
             this.lblDacbiet.Size = new System.Drawing.Size(164, 25);
             this.lblDacbiet.TabIndex = 14;
@@ -157,37 +157,37 @@
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.rdo3D);
-            this.groupBox1.Controls.Add(this.rdo2D);
+            this.groupBox1.Controls.Add(this.rdbtn3D);
+            this.groupBox1.Controls.Add(this.rdbtn2D);
             this.groupBox1.Location = new System.Drawing.Point(180, 260);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(180, 47);
             this.groupBox1.TabIndex = 13;
             this.groupBox1.TabStop = false;
             // 
-            // rdo3D
+            // rdbtn3D
             // 
-            this.rdo3D.AutoSize = true;
-            this.rdo3D.Location = new System.Drawing.Point(95, 14);
-            this.rdo3D.Name = "rdo3D";
-            this.rdo3D.Size = new System.Drawing.Size(58, 29);
-            this.rdo3D.TabIndex = 1;
-            this.rdo3D.TabStop = true;
-            this.rdo3D.Text = "3D";
-            this.rdo3D.UseVisualStyleBackColor = true;
-            this.rdo3D.CheckedChanged += new System.EventHandler(this.rdo3D_CheckedChanged);
+            this.rdbtn3D.AutoSize = true;
+            this.rdbtn3D.Location = new System.Drawing.Point(95, 14);
+            this.rdbtn3D.Name = "rdbtn3D";
+            this.rdbtn3D.Size = new System.Drawing.Size(58, 29);
+            this.rdbtn3D.TabIndex = 1;
+            this.rdbtn3D.TabStop = true;
+            this.rdbtn3D.Text = "3D";
+            this.rdbtn3D.UseVisualStyleBackColor = true;
+            this.rdbtn3D.CheckedChanged += new System.EventHandler(this.rdo3D_CheckedChanged);
             // 
-            // rdo2D
+            // rdbtn2D
             // 
-            this.rdo2D.AutoSize = true;
-            this.rdo2D.Location = new System.Drawing.Point(15, 14);
-            this.rdo2D.Name = "rdo2D";
-            this.rdo2D.Size = new System.Drawing.Size(58, 29);
-            this.rdo2D.TabIndex = 0;
-            this.rdo2D.TabStop = true;
-            this.rdo2D.Text = "2D";
-            this.rdo2D.UseVisualStyleBackColor = true;
-            this.rdo2D.CheckedChanged += new System.EventHandler(this.rdo2D_CheckedChanged);
+            this.rdbtn2D.AutoSize = true;
+            this.rdbtn2D.Location = new System.Drawing.Point(15, 14);
+            this.rdbtn2D.Name = "rdbtn2D";
+            this.rdbtn2D.Size = new System.Drawing.Size(58, 29);
+            this.rdbtn2D.TabIndex = 0;
+            this.rdbtn2D.TabStop = true;
+            this.rdbtn2D.Text = "2D";
+            this.rdbtn2D.UseVisualStyleBackColor = true;
+            this.rdbtn2D.CheckedChanged += new System.EventHandler(this.rdo2D_CheckedChanged);
             // 
             // txtDT
             // 
@@ -519,8 +519,8 @@
         private System.Windows.Forms.Label lblDacbiet;
         private System.Windows.Forms.Label lblĐindang;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.RadioButton rdo3D;
-        private System.Windows.Forms.RadioButton rdo2D;
+        private System.Windows.Forms.RadioButton rdbtn3D;
+        private System.Windows.Forms.RadioButton rdbtn2D;
         private System.Windows.Forms.TextBox txtDT;
         private System.Windows.Forms.Label lblDotuoi;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;

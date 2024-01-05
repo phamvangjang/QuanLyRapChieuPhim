@@ -40,22 +40,24 @@ namespace QuanLyRapChieuPhim
 
         private void rdo2D_CheckedChanged(object sender, System.EventArgs e)
         {
-            if (rdo2D.Checked)
+            if (rdbtn2D.Checked)
             {
                 txtGhedoi.Visible = true;
-                txtDacbiet.Visible = false;
                 lblGhedoi.Visible = true;
+                txtGhedoi.Clear();
+                txtDacbiet.Visible = false;
                 lblDacbiet.Visible = false;
             }
         }
 
         private void rdo3D_CheckedChanged(object sender, System.EventArgs e)
         {
-            if (rdo3D.Checked)
+            if (rdbtn3D.Checked)
             {
-                txtGhedoi.Visible = false;
                 txtDacbiet.Visible = true;
                 lblDacbiet.Visible = true;
+                txtDacbiet.Clear();
+                txtGhedoi.Visible = false;
                 lblGhedoi.Visible = false;
             }
         }
@@ -93,24 +95,23 @@ namespace QuanLyRapChieuPhim
             rdoTinhCam.Checked = true;
             dtNgayCC.Value=DateTime.Now;
             txtDT.Text = string.Empty;
-            rdo2D.Checked = true;
+            rdbtn2D.Checked = true;
             txtDacbiet.Text = string.Empty;
             txtGhedoi.Text = string.Empty;
 
             // Gán giá trị mặc định cho các TextBox nhập liệu
+            txtMaDon.Enabled = true;
             txtMaDon.Focus();
         }
 
         private void btnThem_Click(object sender, System.EventArgs e)
         {
             Reset();
-            txtMaDon.Enabled = true;
-            txtMaDon.Focus();
         }
 
         private new bool Validate()
         {
-            if (string.IsNullOrEmpty(txtMaDon.Text) || string.IsNullOrEmpty(txtTen.Text) || string.IsNullOrEmpty(txtQG.Text) || string.IsNullOrEmpty(txtDT.Text) || (string.IsNullOrEmpty(txtGhedoi.Text) && rdo2D.Checked) || (string.IsNullOrEmpty(txtDacbiet.Text) && rdo3D.Checked))
+            if (string.IsNullOrEmpty(txtMaDon.Text) || string.IsNullOrEmpty(txtTen.Text) || string.IsNullOrEmpty(txtQG.Text) || string.IsNullOrEmpty(txtDT.Text) || (string.IsNullOrEmpty(txtGhedoi.Text) && rdbtn2D.Checked) || (string.IsNullOrEmpty(txtDacbiet.Text) && rdbtn3D.Checked))
             {
                 MessageBox.Show("Thông tin không được để trống!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -125,12 +126,12 @@ namespace QuanLyRapChieuPhim
                 MessageBox.Show("Độ tuối phải là số dương", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (txtGhedoi.Text.Any(n => !char.IsDigit(n)) && rdo2D.Checked)
+            if (txtGhedoi.Text.Any(n => !char.IsDigit(n)) && rdbtn2D.Checked)
             {
                 MessageBox.Show("Phụphim phải là số dương!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
-            if (txtDacbiet.Text.Any(n => !char.IsDigit(n)) && rdo3D.Checked)
+            if (txtDacbiet.Text.Any(n => !char.IsDigit(n)) && rdbtn3D.Checked)
             {
                 MessageBox.Show("Phụphim phải là số dương!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
@@ -153,7 +154,7 @@ namespace QuanLyRapChieuPhim
                     float ptghedoi = 0;
                     float ptdacbiet = 0;
                     float dt = 0;
-                    if (rdo2D.Checked)
+                    if (rdbtn2D.Checked)
                     {
                         ptghedoi+=(float.Parse(txtGhedoi.Text));
                         dt += (110000 + ptghedoi);
@@ -164,24 +165,22 @@ namespace QuanLyRapChieuPhim
                         dt += (210000 + ptdacbiet);
                     }
                     //save to db
-                    _db.Phims.Add(new Phim() { MaDon = txtMaDon.Text, TenPhim = txtTen.Text, QuocGia = txtQG.Text, TheLoai = rdoTinhCam.Checked ? "Tình cám" : "Hành động", NgayCC = dtNgayCC.Value, DoTuoi = int.Parse(txtDT.Text), GheDoi = ptghedoi, DacBiet = ptdacbiet, DinhDang = rdo2D.Checked ? "2D" : "3D", Doanhthu = dt });
+                    _db.Phims.Add(new Phim() { MaDon = txtMaDon.Text, TenPhim = txtTen.Text, QuocGia = txtQG.Text, TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động", NgayCC = dtNgayCC.Value, DoTuoi = int.Parse(txtDT.Text), GheDoi = ptghedoi, DacBiet = ptdacbiet, DinhDang = rdbtn2D.Checked ? "2D" : "3D", Doanhthu = dt });
                     _db.SaveChanges();
 
                     //show to listview
                     ListViewItem listViewItem = new ListViewItem(txtMaDon.Text);
                     listViewItem.SubItems.Add(txtTen.Text);
-                    listViewItem.SubItems.Add(rdoTinhCam.Checked ? "Tình cám" : "Hành động");
+                    listViewItem.SubItems.Add(rdoTinhCam.Checked ? "Tình cảm" : "Hành động");
                     listViewItem.SubItems.Add(dtNgayCC.Value.ToString("dd/MM/yyyy"));
 
                     //hight light to listview
-                    /*
                     DateTime ngayht = DateTime.Now;
                     TimeSpan timeDifference = DateTime.Parse(dtNgayCC.ToString()) - ngayht;
                     if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
                     {
                         listViewItem.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
                     }
-                    */
                     lvDSP.Items.Add(listViewItem);
                     MessageBox.Show("Đã thêm thú cưng thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     Reset();
@@ -203,7 +202,7 @@ namespace QuanLyRapChieuPhim
                     txtMaDon.Text = phim.MaDon.Trim();
                     txtTen.Text = phim.TenPhim.Trim();
                     txtQG.Text = phim.QuocGia.Trim();
-                    if(phim.TheLoai== "Tình cám")
+                    if(phim.TheLoai== "Tình cảm")
                     {
                         rdoTinhCam.Checked = true;
                     }
@@ -212,24 +211,29 @@ namespace QuanLyRapChieuPhim
                         rdoHanhDong.Checked = true;
                     }
                     dtNgayCC.Value=phim.NgayCC.Value;
-                    txtDT.Text = (phim.DoTuoi.ToString());
-                    if (phim.DinhDang == "2D")
+                    txtDT.Text = phim.DoTuoi.ToString().Trim();
+                    if(phim.DinhDang=="2D")
                     {
-                        rdo2D.Checked = true;
-                        txtGhedoi.Text=phim.GheDoi.ToString();
+                        rdbtn2D.Checked = true;
+                        txtGhedoi.Text=phim.GheDoi.ToString().Trim();
                         txtDacbiet.Clear();
                     }
                     else
                     {
-                        rdo3D.Checked = true;
-                        txtDacbiet.Text=phim.DacBiet.ToString();
-                        txtGhedoi.Clear ();
+                        rdbtn3D.Checked = true;
+                        txtDacbiet.Text=phim.DacBiet.ToString().Trim();
+                        txtGhedoi.Clear();
                     }
                 }
                 else
                 {
                     MessageBox.Show("Không tìm thấy mã phim!", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
                 }
+            }
+            else
+            {
+                txtMaDon.Enabled = true;
             }
         }
 
@@ -283,7 +287,7 @@ namespace QuanLyRapChieuPhim
                 float ptghedoi = 0;
                 float ptdacbiet = 0;
                 float dt = 0;
-                if (rdo2D.Checked)
+                if (rdbtn2D.Checked)
                 {
                     ptghedoi = float.Parse(txtGhedoi.Text);
                     dt += (110000 + ptghedoi);
@@ -298,12 +302,12 @@ namespace QuanLyRapChieuPhim
                 {
                    phim.TenPhim = txtTen.Text;
                    phim.QuocGia = txtQG.Text;
-                   phim.TheLoai = rdoTinhCam.Checked ? "Tình cám" : "Hành động";
+                   phim.TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động";
                    phim.NgayCC = dtNgayCC.Value;
                    phim.DoTuoi = int.Parse(txtDT.Text);
                    phim.GheDoi = ptghedoi;
                    phim.DacBiet=ptdacbiet;
-                   phim.DinhDang = rdo2D.Checked ? "2D" : "3D";
+                   phim.DinhDang = rdbtn2D.Checked ? "2D" : "3D";
                    phim.Doanhthu = dt;
                     _db.SaveChanges();
                     txtMaDon.Enabled = true;

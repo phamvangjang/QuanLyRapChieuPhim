@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QuanLyDoanhThuPhimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QuanLyDoanhThuPhimModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Phim">
           <Key>
             <PropertyRef Name="MaDon" />
@@ -17,7 +17,7 @@
           <Property Name="DoTuoi" Type="int" />
           <Property Name="GheDoi" Type="float" />
           <Property Name="DacBiet" Type="float" />
-          <Property Name="DinhDang" Type="nchar" MaxLength="10" />
+          <Property Name="DinhDang" Type="nvarchar" MaxLength="10" />
           <Property Name="Doanhthu" Type="float" />
         </EntityType>
         <EntityType Name="sysdiagrams">
@@ -34,8 +34,7 @@
           <EntitySet Name="Phim" EntityType="Self.Phim" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QuanLyDoanhThuPhimModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -51,7 +50,7 @@
           <Property Name="DoTuoi" Type="Int32" />
           <Property Name="GheDoi" Type="Double" />
           <Property Name="DacBiet" Type="Double" />
-          <Property Name="DinhDang" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DinhDang" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="Doanhthu" Type="Double" />
         </EntityType>
         <EntityType Name="sysdiagram">
