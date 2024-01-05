@@ -15,7 +15,7 @@ namespace QuanLyRapChieuPhim
             InitializeComponent();
         }
         QuanLyDoanhThuPhimEntities1 _db = new QuanLyDoanhThuPhimEntities1();
-        //dong chuong trinh
+
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             // Hiển thị hộp thoại xác nhận
@@ -26,7 +26,7 @@ namespace QuanLyRapChieuPhim
                 e.Cancel = true; // Ngăn chặn việc đóng ứng dụng nếu người dùng không đồng ý.
             }
         }
-        //chay chuong trinh
+        
         private void Form1_Load(object sender, System.EventArgs e)
         {
             Reset();
@@ -71,11 +71,10 @@ namespace QuanLyRapChieuPhim
                 listViewItem.SubItems.Add(a.TenPhim.ToString());
                 listViewItem.SubItems.Add(a.TheLoai.ToString());
                 listViewItem.SubItems.Add(a.NgayCC.Value.ToString("dd/MM/yyyy"));
-                DateTime ngayht = DateTime.Now;
-                TimeSpan timeDifference = DateTime.Parse(a.NgayCC.ToString()) - ngayht;
-                if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
+
+                if( ((DateTime.Now - a.NgayCC.Value).TotalDays <= 7) && ((DateTime.Now - a.NgayCC.Value).TotalDays) > -7)
                 {
-                    listViewItem.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
+                    listViewItem.BackColor = Color.LightGoldenrodYellow;
                 }
 
                 lvDSP.Items.Add(listViewItem);
@@ -168,22 +167,8 @@ namespace QuanLyRapChieuPhim
                     _db.Phims.Add(new Phim() { MaDon = txtMaDon.Text, TenPhim = txtTen.Text, QuocGia = txtQG.Text, TheLoai = rdoTinhCam.Checked ? "Tình cảm" : "Hành động", NgayCC = dtNgayCC.Value, DoTuoi = int.Parse(txtDT.Text), GheDoi = ptghedoi, DacBiet = ptdacbiet, DinhDang = rdbtn2D.Checked ? "2D" : "3D", Doanhthu = dt });
                     _db.SaveChanges();
 
-                    //show to listview
-                    ListViewItem listViewItem = new ListViewItem(txtMaDon.Text);
-                    listViewItem.SubItems.Add(txtTen.Text);
-                    listViewItem.SubItems.Add(rdoTinhCam.Checked ? "Tình cảm" : "Hành động");
-                    listViewItem.SubItems.Add(dtNgayCC.Value.ToString("dd/MM/yyyy"));
-
-                    //hight light to listview
-                    DateTime ngayht = DateTime.Now;
-                    TimeSpan timeDifference = DateTime.Parse(dtNgayCC.ToString()) - ngayht;
-                    if (timeDifference.TotalDays <= 7 && timeDifference.TotalDays >= 0) // Nếu phim công chiếu trong vòng 7 ngày
-                    {
-                        listViewItem.BackColor = Color.LightGoldenrodYellow; // Tô nền vàng cho dòng dữ liệu
-                    }
-                    lvDSP.Items.Add(listViewItem);
+                    ResetListView(_db.Phims.ToList());
                     MessageBox.Show("Đã thêm thú cưng thành công!", "Thông báo", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    Reset();
                 }
             }
         }
@@ -310,11 +295,10 @@ namespace QuanLyRapChieuPhim
                    phim.DinhDang = rdbtn2D.Checked ? "2D" : "3D";
                    phim.Doanhthu = dt;
                     _db.SaveChanges();
-                    txtMaDon.Enabled = true;
                     ResetListView(_db.Phims.ToList());
-                    Reset();
                     MessageBox.Show("Đã sửa phim thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
                 }
+                lvDSP.Items[index].Selected = true;
             }
             else
             {
@@ -326,7 +310,7 @@ namespace QuanLyRapChieuPhim
         {
             try
             {
-                var sort = _db.Phims.OrderBy(p => p.NgayCC).OrderByDescending(p => p.DoTuoi).ToList();
+                var sort = _db.Phims.OrderBy(p => p.NgayCC).ThenByDescending(p => p.DoTuoi).ToList();
                 ResetListView(sort);
                 MessageBox.Show("Đã sắp xếp thành công", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Question);
             }
